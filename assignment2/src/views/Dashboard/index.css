@@ -1,0 +1,7 @@
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 5px;
+    margin-top: 50px;
+}

@@ -1,0 +1,22 @@
+
+.details {
+    display: flex;
+    padding: 0 100px;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+
+.details img{
+    width: 600px;
+    height: 500px;
+}
+
+.details_side {
+    margin-left: 50px;
+}
+
+.details_side div {
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 10px;
+    padding: 10px 20px;
+}

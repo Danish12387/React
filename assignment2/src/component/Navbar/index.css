@@ -1,0 +1,166 @@
+* {
+    font-family: sans-serif;
+}
+
+nav {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all .3s ease-out;
+    border-bottom: 1px solid rgb(228, 228, 228);
+}
+
+.logo {
+    width: 44px;
+    height: 44px;
+}
+
+.nav_top_div {
+    display: flex;
+    align-items: center;
+    margin-left: 29px;
+    height: 57px;
+}
+
+.motors {
+    display: flex;
+    align-items: center;
+    margin-left: 38px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+.motors:hover {
+    color: rgb(92, 92, 228);
+}
+
+.motors img {
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+}
+
+.motors .img_div {
+    height: 35px;
+    width: 35px;
+    background-color: white;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+}
+
+.scroll-on {
+    box-shadow: 1px 1px 10px 1px rgb(143, 143, 143);
+}
+
+.nav_main_div {
+    display: flex;
+    align-items: center;
+    margin-left: 35px;
+    height: 59px;
+    margin-bottom: 2px;
+}
+
+.nav_input_div {
+    margin-left: 35px;
+    border: 2px solid black;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.nav_input_div input {
+    height: 42px;
+    font-size: 16px;
+    border: none;
+    width: 190px;
+}
+
+.nav_input_div input:focus {
+    outline: none;
+}
+
+.nav_input_div img {
+    width: 14px;
+    height: 14px;
+    margin: 10px;
+}
+
+.nav_input_div._2 {
+    margin-left: 16px;
+    padding-left: 9px;
+}
+
+.nav_input_div._2 input {
+    width: 529px;
+}
+
+.nav_input_div._2 img {
+    height: 35px;
+    width: 35px;
+    margin: 0;
+    background-color: #002f34;
+}
+
+.nav_inp_img_div {
+    height: 44px;
+    width: 46px;
+    background-color: #002f34;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav_side_div {
+    margin-left: 40px;
+    margin-bottom: 5px;
+    width: 141px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.nav_prof_img_div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 53px;
+}
+
+.nav_prof_img_div img {
+    width: 35px;
+    height: 35px;
+}
+
+.nav_prof_img_div .down_arrow {
+    width: 17px;
+    height: 17px;
+}
+
+.btn_div{
+    position: relative;
+    margin-left: 19px;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+.my-button {
+    background-color: white;
+    position: absolute;
+    top: 15px;
+    left: 18px;
+    border: none;
+    font-size: 14px;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 67px;
+    cursor: pointer;
+}
