@@ -1,0 +1,72 @@
+.sign-up {
+    height: 440px;
+    width: 350px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0px 2px 10px 1px rgb(190, 190, 190);
+    border-radius: 5px;
+    background-color: white;
+}
+
+.signUp_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 320px;
+    height: 300px;
+}
+
+.signUp_main input {
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid rgb(201, 201, 201);
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.signUp_main input:focus {
+    outline: 1px solid rgba(123, 0, 148, 0.5);
+    box-shadow: 0px 0px 6px 1px rgba(123, 0, 148, 0.5);
+    border: none;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    width: 50%;
+    cursor: pointer;
+    /* font-size: 18px; */
+}
+
+input[type="checkbox"] {
+    height: 14px;
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn {
+    height: 40px;
+    width: 100px;
+    background-color: white;
+    color: rgb(129, 0, 155);
+    border: 1px solid rgb(129, 0, 155);
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: transform .3s ease-out, background-color .5s ease-in, color .3s ease-out;
+    margin-bottom: 20px;
+}
+
+.btn:hover {
+    background-color: rgb(129, 0, 155);
+    color: white;
+    box-shadow: 1px 1px 5px 1px rgb(129, 129, 129);
+    transform: scale(1.08);
+}

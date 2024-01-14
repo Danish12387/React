@@ -10,10 +10,7 @@ function Details() {
     useEffect(() => {
         fetch(`https://dummyjson.com/products/${Id}`)
             .then(res => res.json())
-            .then(res => {
-                SetSingleProd(res)
-                console.log(res)
-            });
+            .then(res => SetSingleProd(res));
     }, [])
 
     if (!singleProd) {
