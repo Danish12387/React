@@ -5,12 +5,13 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "fir
 import { useNavigate } from "react-router-dom";
 
 const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
+    apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
+    authDomain: "olx-website-288a0.firebaseapp.com",
+    projectId: "olx-website-288a0",
+    storageBucket: "olx-website-288a0.appspot.com",
+    messagingSenderId: "93574521400",
+    appId: "1:93574521400:web:f4f04b913c9cae6a30bccd",
+    measurementId: "G-MFRGB904CK"
 };
 
 // Initialize Firebase
@@ -80,7 +81,7 @@ export function GetAllProducts() {
     );
 }
 
-export function Createuser(auth, email, password) {
+export function Createuser(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed up 
@@ -96,17 +97,18 @@ export function Createuser(auth, email, password) {
         });
 }
 
-export function onAuth(){
-    
+export function onAuth() {
+
     onAuthStateChanged(auth, (user) => {
         const navigate = useNavigate();
         if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          const uid = user.uid;
-          // ...
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/auth.user
+            const uid = user.uid;
+            // ...
         } else {
             navigate('signup')
+            alert('sign In')
         }
-      });
+    });
 }
