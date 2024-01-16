@@ -5,19 +5,19 @@ import { useState, useEffect } from 'react';
 
 function SingUp() {
     const navigate = useNavigate();
-    const [pass, setPass] = useState();
+    const [password, setPass] = useState();
     const [email, setEmail] = useState();
     const [userName, setUserName] = useState();
 
-    const signup = () => {
-        Createuser(email, pass)
+    const signup = async () => {
+        try {
+            await Createuser({ email, password, userName })
+            navigate('/dashboard')
+        } catch (e) {
+            alert(e.message)
+        }
     }
 
-    useEffect(() => {
-        onAuth()
-        }, [])
-        
-        
     return <div id="sign-up-page">
         <form className="sign-up" id="form-1">
             <h1>Sign Up</h1>

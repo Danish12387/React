@@ -1,4 +1,15 @@
 .App {
   text-align: center;
 }
+.App .firstDIv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: aliceblue;
+}
+
+.router{
+  width: 1345px;
+}
 

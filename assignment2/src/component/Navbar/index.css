@@ -9,6 +9,13 @@ nav {
     z-index: 1000;
     transition: all .3s ease-out;
     border-bottom: 1px solid rgb(228, 228, 228);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav_father_div {
+    width: 1340px;
 }
 
 .logo {
@@ -143,7 +150,7 @@ nav {
     height: 17px;
 }
 
-.btn_div{
+.btn_div {
     position: relative;
     margin-left: 19px;
     margin-bottom: 3px;
