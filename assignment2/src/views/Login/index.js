@@ -20,7 +20,7 @@ function Login() {
 
     return (
         <div id="login-page">
-            <form className="sign-up-2" id="form-2">
+            <div className="sign-up-2" id="form-2">
                 <h1>Login</h1>
                 <div className="main-2">
                     <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter your Email" required />
@@ -29,7 +29,7 @@ function Login() {
                     <a href="" id="link" onClick={() => navigate('signup')}>create an account?</a>
                 </div>
                 <button className="btn" onClick={signin}>Login</button>
-            </form>
+            </div>
         </div>
     )
 }

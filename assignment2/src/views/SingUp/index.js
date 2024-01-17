@@ -19,7 +19,7 @@ function SingUp() {
     }
 
     return <div id="sign-up-page">
-        <form className="sign-up" id="form-1">
+        <div className="sign-up" id="form-1">
             <h1>Sign Up</h1>
             <div className="signUp_main">
                 <input type="text" placeholder="User Name" required onChange={(e) => setUserName(e.target.value)} />
@@ -30,7 +30,7 @@ function SingUp() {
                 <a href="/" id="link">Already have an account?</a>
             </div>
             <button className="btn" onClick={signup}>Sign Up</button>
-        </form>
+        </div>
     </div>
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from '../../component/Cards';
 import './index.css';
-import { onAuth } from '../../config/firebase';
+import { OnAuth } from '../../config/firebase';
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -17,16 +17,17 @@ function Dashboard() {
 
   const onauth = async () => {
     try {
-      await onAuth()
+      await OnAuth()
       navigate('/dashboard')
     } catch (e) {
-      alert(e.message)
+      navigate('/')
+      // alert(e.message)
     }
   }
 
-  // useEffect(() => {
-  //   onauth()
-  // }, [])
+  useEffect(() => {
+    onauth()
+  }, [])
 
   return <div className="dashboard">
     {products.map((item) => {

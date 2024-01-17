@@ -98,15 +98,16 @@ export async function Signin(userInfo) {
 }
 
 
-export async function onAuth() {
-    await onAuthStateChanged(auth, (user) => {
+export function OnAuth() {
+    const navigate = useNavigate();
+    onAuthStateChanged(auth, (user) => {
         if (user) {
             const uid = user.uid;
-            // ...
+            navigate('/dashboard')
         } else {
-            // const navigate = useNavigate();
             // navigate('/signup')
-            alert('sign In')
+            alert('not loggin')
+            return ('not loggin from return')
         }
     });
 }
