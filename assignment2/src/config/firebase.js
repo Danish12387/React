@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
@@ -15,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
+const storage = getStorage(app)
 
 let useruid;
 
@@ -83,13 +85,17 @@ let useruid;
 
 
 export async function PostAdd(data) {
-  const { title, desc, price } = data;
+  const { title, desc, price, img } = data;
   if (!useruid) {
     throw new Error('User not authenticated');
   }
 
   const userRef = doc(db, 'Posts', useruid);
   await setDoc(userRef, { title, price, desc });
+
+  const profilePhotoRef = ref(storage, `posts/${useruid}`)
+  await uploadBytes(profilePhotoRef, img)
+
   alert('Successfully Posted Add!');
 }
 

@@ -8,6 +8,7 @@ function Post() {
   const [title, setTitle] = useState();
   const [desc, setDesc] = useState();
   const [price, setPrice] = useState();
+  const [img, setImg] = useState('');
 
   const navigate = useNavigate();
 
@@ -15,8 +16,12 @@ function Post() {
     try {
       await onAuthStateChangedHandler(async (isLoggedIn, useruid) => {
         if (isLoggedIn) {
-          const data = { title, desc, price };
+          const data = { title, desc, price, img };
           await PostAdd(data);
+          setTitle('')
+          setDesc('')
+          setPrice('')
+          setImg('')
         } else {
           alert('User not authenticated');
           navigate('/');
@@ -29,25 +34,29 @@ function Post() {
 
   return (
     <div className="post_main">
-      <h2>POST YOUR AD</h2>
+      <h2>POST YOUR ADD</h2>
       <div className='add'>
         <h3>INCLUDE SOME DETAILS</h3>
 
         <label>
-          <span>Add Title</span>
-          <input onChange={(e) => setTitle(e.target.value)} />
+          <span>Add Title: </span>
+          <input onChange={(e) => setTitle(e.target.value)} value={title} type="text"/>
         </label>
 
         <label>
-          <span>Description</span>
-          <input onChange={(e) => setDesc(e.target.value)} />
+          <span>Description: </span>
+          <input onChange={(e) => setDesc(e.target.value)} value={desc} type="text"/>
         </label>
 
         <label>
-          <span>Price</span>
-          <input onChange={(e) => setPrice(e.target.value)} />
+          <span>Price: </span>
+          <input onChange={(e) => setPrice(e.target.value)} value={price} type="text"/>
         </label>
-        <button onClick={addPost}>Add</button>
+        <label>
+          <span>Images: </span>
+          <input onChange={(e) => setImg(e.target.value)} value={img} type="file" />
+        </label>
+        <button onClick={addPost}>Post Now</button>
       </div>
 
       {/*
