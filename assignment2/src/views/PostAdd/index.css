@@ -1,0 +1,42 @@
+.add {
+    border:  1px solid rgb(172, 172, 172);
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.post_main h3{
+    text-align: left;
+}
+
+.post_main label {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    background-color: aliceblue;
+    height: 100px;
+}
+
+
+.Post_main_div {
+    border: 1px solid rgb(180, 180, 180);
+    margin: 0px 30px;
+}
+
+.Post_second_main {
+    border-top: 1px solid rgb(180, 180, 180);
+    display: flex;
+}
+
+.Post_first_component {
+    flex: 1;
+}
+
+.Post_second_component {
+    flex: 1;
+    border-left: 1px solid rgb(180, 180, 180);
+}
+
+.Post_third_component {
+    flex: 1;
+    border-left: 1px solid rgb(180, 180, 180);
+}

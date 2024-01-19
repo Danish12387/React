@@ -1,8 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
 const firebaseConfig = {
     apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
@@ -12,9 +10,8 @@ const firebaseConfig = {
     messagingSenderId: "93574521400",
     appId: "1:93574521400:web:f4f04b913c9cae6a30bccd",
     measurementId: "G-MFRGB904CK"
-  };
+};
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
@@ -82,32 +79,29 @@ const auth = getAuth();
 // }
 
 export async function Createuser(userInfo) {
-    const { email, pass, userName } = userInfo
-    const { user: { uid } } = await createUserWithEmailAndPassword(auth, email, pass)
+    const { email, password, userName } = userInfo
+    const { user: { uid } } = await createUserWithEmailAndPassword(auth, email, password)
     const userRef = doc(db, 'users', uid);
-    await setDoc(userRef, { email, userName })
+    await setDoc(userRef, { email, userName, password })
 
     alert('Registered Successfully!')
 }
 
 export async function Signin(userInfo) {
-    const { email, pass } = userInfo
-    await signInWithEmailAndPassword(auth, email, pass)
+    const { email, password } = userInfo
+    await signInWithEmailAndPassword(auth, email, password)
 
     alert('logged In Successfully!')
 }
 
 
-export function OnAuth() {
-    const navigate = useNavigate();
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            navigate('/dashboard')
-        } else {
-            // navigate('/signup')
-            alert('not loggin')
-            return ('not loggin from return')
-        }
+export const onAuthStateChangedHandler = (callback) => {
+    return onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        callback(true, uid);
+      } else {
+        callback(false, null);
+      }
     });
-}
+  };

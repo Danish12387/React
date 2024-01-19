@@ -17,7 +17,7 @@ function Details() {
         return <div>loading...</div>
     }
 
-    const { price, description, images } = singleProd;
+    const { price, description, images, title } = singleProd;
 
     return <div className="details">
         <div style={{height: '500px', width:'600px'}}>
@@ -31,6 +31,7 @@ function Details() {
             />
         </div>
         <div className='details_side'>
+            <h3>{title}</h3>
             <h1>Price: ${price}</h1>
             <div>
                 <h3>Description</h3>

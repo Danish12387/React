@@ -3,6 +3,7 @@ import Dashboard from "../views/Dashboard";
 import Details from "../views/Details";
 import SingUp from "../views/SingUp";
 import Login from "../views/Login";
+import PostAddDiv from "../views/PostAdd"
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     {
         path: "/signup",
         element: <SingUp/>,
+    },
+    {
+        path: "/dashboard/postAdd",
+        element: <PostAddDiv/>,
     },
     {
         path: "/details/:Id",

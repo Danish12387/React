@@ -1,7 +1,7 @@
+import './index.css';
 import { useEffect, useState } from "react";
 import Card from '../../component/Cards';
-import './index.css';
-import { OnAuth } from '../../config/firebase';
+import { onAuthStateChangedHandler } from '../../config/firebase';
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -15,19 +15,15 @@ function Dashboard() {
 
   const navigate = useNavigate();
 
-  const onauth = async () => {
-    try {
-      await OnAuth()
-      navigate('/dashboard')
-    } catch (e) {
-      navigate('/')
-      // alert(e.message)
-    }
-  }
-
   useEffect(() => {
-    onauth()
-  }, [])
+    const unsubscribe = onAuthStateChangedHandler((isLoggedIn, uid) => {
+      if (!isLoggedIn) {
+        navigate('/');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return <div className="dashboard">
     {products.map((item) => {
