@@ -3,18 +3,20 @@ import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestor
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
-    authDomain: "olx-website-288a0.firebaseapp.com",
-    projectId: "olx-website-288a0",
-    storageBucket: "olx-website-288a0.appspot.com",
-    messagingSenderId: "93574521400",
-    appId: "1:93574521400:web:f4f04b913c9cae6a30bccd",
-    measurementId: "G-MFRGB904CK"
+  apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
+  authDomain: "olx-website-288a0.firebaseapp.com",
+  projectId: "olx-website-288a0",
+  storageBucket: "olx-website-288a0.appspot.com",
+  messagingSenderId: "93574521400",
+  appId: "1:93574521400:web:f4f04b913c9cae6a30bccd",
+  measurementId: "G-MFRGB904CK"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
+
+let useruid;
 
 // export function GetAllProducts() {
 //     const [products, setProducts] = useState([]);
@@ -78,30 +80,44 @@ const auth = getAuth();
 //     );
 // }
 
-export async function Createuser(userInfo) {
-    const { email, password, userName } = userInfo
-    const { user: { uid } } = await createUserWithEmailAndPassword(auth, email, password)
-    const userRef = doc(db, 'users', uid);
-    await setDoc(userRef, { email, userName, password })
 
-    alert('Registered Successfully!')
+
+export async function PostAdd(data) {
+  const { title, desc, price } = data;
+  if (!useruid) {
+    throw new Error('User not authenticated');
+  }
+
+  const userRef = doc(db, 'Posts', useruid);
+  await setDoc(userRef, { title, price, desc });
+  alert('Successfully Posted Add!');
+}
+
+export async function Createuser(userInfo) {
+  const { email, password, userName } = userInfo
+  const { user: { uid } } = await createUserWithEmailAndPassword(auth, email, password)
+  const userRef = doc(db, 'users', uid);
+  await setDoc(userRef, { email, userName, password })
+
+  alert('Registered Successfully!')
 }
 
 export async function Signin(userInfo) {
-    const { email, password } = userInfo
-    await signInWithEmailAndPassword(auth, email, password)
+  const { email, password } = userInfo
+  await signInWithEmailAndPassword(auth, email, password)
 
-    alert('logged In Successfully!')
+  alert('logged In Successfully!')
 }
 
 
 export const onAuthStateChangedHandler = (callback) => {
-    return onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        callback(true, uid);
-      } else {
-        callback(false, null);
-      }
-    });
-  };
+  return onAuthStateChanged(auth, (user) => {
+    if (user) {
+      useruid = user.uid;
+      callback(true, useruid);
+    } else {
+      useruid = null;
+      callback(false, null);
+    }
+  });
+};

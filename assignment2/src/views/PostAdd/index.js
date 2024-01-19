@@ -1,7 +1,32 @@
-import PostAddDiv from '../../component/PostAddDiv'
 import "./index.css"
+import PostAddDiv from '../../component/PostAddDiv'
+import { useState } from "react";
+import { PostAdd, onAuthStateChangedHandler } from '../../config/firebase';
+import { useNavigate } from "react-router-dom";
 
 function Post() {
+  const [title, setTitle] = useState();
+  const [desc, setDesc] = useState();
+  const [price, setPrice] = useState();
+
+  const navigate = useNavigate();
+
+  const addPost = async () => {
+    try {
+      await onAuthStateChangedHandler(async (isLoggedIn, useruid) => {
+        if (isLoggedIn) {
+          const data = { title, desc, price };
+          await PostAdd(data);
+        } else {
+          alert('User not authenticated');
+          navigate('/');
+        }
+      });
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
   return (
     <div className="post_main">
       <h2>POST YOUR AD</h2>
@@ -10,18 +35,19 @@ function Post() {
 
         <label>
           <span>Add Title</span>
-          <input />
+          <input onChange={(e) => setTitle(e.target.value)} />
         </label>
 
         <label>
           <span>Description</span>
-          <input />
+          <input onChange={(e) => setDesc(e.target.value)} />
         </label>
-        
+
         <label>
           <span>Price</span>
-          <input />
+          <input onChange={(e) => setPrice(e.target.value)} />
         </label>
+        <button onClick={addPost}>Add</button>
       </div>
 
       {/*

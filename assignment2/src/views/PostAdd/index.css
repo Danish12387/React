@@ -9,12 +9,18 @@
 }
 
 .post_main label {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
     background-color: aliceblue;
     height: 100px;
 }
+
+.post_main label span{
+    display: block;
+    background-color: aqua;
+} 
+
+.post_main label input{
+    display: block;
+} 
 
 
 .Post_main_div {

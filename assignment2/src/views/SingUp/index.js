@@ -21,7 +21,7 @@ function SingUp() {
     }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChangedHandler((isLoggedIn, uid) => {
+        const unsubscribe = onAuthStateChangedHandler((isLoggedIn, useruid) => {
             if (isLoggedIn) {
                 navigate('/dashboard');
             }
