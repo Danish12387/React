@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Card(props) {
     const navigate = useNavigate();
-    const { id, description, thumbnail, price, rating, stock } = props.item
+    const { id, description, thumbnail, price, rating, stock } = props.item;
 
     return <div className="main" onClick={() => navigate(`/details/${id}`)}>
         <img src={thumbnail} className="card_img" />

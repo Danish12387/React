@@ -1,9 +1,11 @@
 import './index.css';
 import { useState, useEffect } from 'react';
 import search from '../../search.png';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const [scrollPosition, setScrollPosition] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -59,7 +61,7 @@ function Navbar() {
                 </div>
                 <div className='btn_div'>
                     <img src='https://www.olx.com.pk/assets/iconSellBorder_noinline.d9eebe038fbfae9f90fd61d971037e02.svg' />
-                    <button class="my-button" ><img src='https://www.olx.com.pk/assets/iconPlusSell_noinline.75fc7ea23e80b50447cf5757d8ef083a.svg' /> SELL</button>
+                    <button onClick={()=> navigate('/dashboard/postAdd')} class="my-button" ><img src='https://www.olx.com.pk/assets/iconPlusSell_noinline.75fc7ea23e80b50447cf5757d8ef083a.svg' /> SELL</button>
                 </div>
             </div>
         </div>

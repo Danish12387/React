@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, setDoc, getDocs } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
@@ -15,85 +15,34 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth();
+export const auth = getAuth();
 const storage = getStorage(app)
 
-let useruid;
+let id;
 
-// export function GetAllProducts() {
-//     const [products, setProducts] = useState([]);
+export async function GetAllProducts() {
+  // const { id, description, thumbnail, price, rating, stock, images, title } = item;
+  // await addDoc(collection(db, "Posts"), { id, description, thumbnail, price, rating, stock, images, title });
 
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             try {
-//                 const response = await fetch('https://dummyjson.com/products');
-//                 const data = await response.json();
-//                 setProducts(data.products);
-//             } catch (error) {
-//                 console.error('Error fetching data:', error);
-//             }
-//         };
-
-//         fetchData();
-//     }, []);
-
-//     useEffect(() => {
-//         // Use a separate useEffect for adding data to Firebase
-//         const addDataToFirebase = async () => {
-
-//             try {
-//                 await addDoc(collection(db, 'Products'), {
-//                     id: 1,
-//                     title: "iPhone 9",
-//                     description: "An apple mobile which is nothing like apple",
-//                     price: 549,
-//                     discountPercentage: 12.96,
-//                     rating: 4.69,
-//                     stock: 94,
-//                     brand: "Apple",
-//                     category: 'smartphones',
-//                     thumbnail: "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg",
-//                     images: [
-//                         "https://cdn.dummyjson.com/product-images/1/1.jpg",
-//                         "https://cdn.dummyjson.com/product-images/1/2.jpg",
-//                         "https://cdn.dummyjson.com/product-images/1/3.jpg",
-//                         "https://cdn.dummyjson.com/product-images/1/4.jpg",
-//                         "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
-//                     ]
-
-//                 });
-//             } catch (error) {
-//                 console.error('Error adding data to Firebase:', error);
-//             }
-//         };
-
-//         addDataToFirebase();
-//     }, [products]);
-
-//     return (
-//         // Your component JSX goes here
-//         // You can render the products or display a loading state
-//         <div>
-//             {/* Render your products here */}
-//             {products.map((item) => (
-//                 <div key={item.id}>{/* Render individual product */}</div>
-//             ))}
-//         </div>
-//     );
-// }
+  const querySnapshot = await getDocs(collection(db, "Posts"));
+  const pro = [];
+  querySnapshot.forEach((doc) => {
+    pro.push({ id: doc.id, ...doc.data() })
+  })
+  return pro;
+}
 
 
 
 export async function PostAdd(data) {
-  const { title, desc, price, img } = data;
-  if (!useruid) {
+  const { title, description, price, img } = data;
+  if (!id) {
     throw new Error('User not authenticated');
   }
 
-  const userRef = doc(db, 'Posts', useruid);
-  await setDoc(userRef, { title, price, desc });
+  await addDoc(collection(db, "Posts"), { title, price, description, id });
 
-  const profilePhotoRef = ref(storage, `posts/${useruid}`)
+  const profilePhotoRef = ref(storage, `posts/${id}`)
   await uploadBytes(profilePhotoRef, img)
 
   alert('Successfully Posted Add!');
@@ -119,10 +68,11 @@ export async function Signin(userInfo) {
 export const onAuthStateChangedHandler = (callback) => {
   return onAuthStateChanged(auth, (user) => {
     if (user) {
-      useruid = user.uid;
-      callback(true, useruid);
+      id = user.uid;
+      callback(true, id);
     } else {
-      useruid = null;
+      id = null;
+      console.log(id);
       callback(false, null);
     }
   });

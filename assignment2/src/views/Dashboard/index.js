@@ -1,34 +1,48 @@
 import './index.css';
 import { useEffect, useState } from "react";
 import Card from '../../component/Cards';
-import { onAuthStateChangedHandler } from '../../config/firebase';
-import { useNavigate } from "react-router-dom";
+import { GetAllProducts } from '../../config/firebase';
 
 function Dashboard() {
   const [products, SetProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://dummyjson.com/products')
-      .then(res => res.json())
-      .then(res => SetProducts(res.products));
+    fetchData();
   }, [])
 
-  const navigate = useNavigate();
+  async function fetchData() {
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedHandler((isLoggedIn, uid) => {
-      if (!isLoggedIn) {
-        navigate('/');
-      }
-    });
+    const res = await GetAllProducts();
+    SetProducts(res);
+    setLoading(false)
+  }
 
-    return () => unsubscribe();
-  }, []);
 
-  return <div className="dashboard">
-    {products.map((item) => {
-      return <Card item={item} />
-    })}
+  // function click() {
+  //   products.map(async (item) => {
+  //     try {
+  //       await GetAllProducts(item);
+  //     } catch (e) {
+  //       alert(e.message);
+  //     }
+
+  //     return <Card item={item} />
+  //   })
+  // }
+
+
+  if (loading) return <h2>Loading...</h2>
+
+  return <div className='dash_baap'>
+    {/* <button onClick={click}>
+      click me
+    </button> */}
+    <div className="dashboard">
+      {products.map((item) => {
+        return <Card item={item} />
+      })}
+    </div>
   </div>
 }
 

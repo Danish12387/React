@@ -6,6 +6,12 @@
 
 .post_main {
     text-align: left;
+    width: 98.9vw;
+}
+
+.post_div {
+    margin: 0 150px;
+    background-color: white;
 }
 
 .post_main h3{
@@ -27,7 +33,7 @@
     width: 100%;
 } 
 
-.post_main label input[type=text]{
+.post_main label .text_input{
     height: 50px;
     width: 99%;
     margin-top: 10px;

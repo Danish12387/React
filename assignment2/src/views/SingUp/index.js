@@ -1,8 +1,7 @@
 import './index.css';
 import { useNavigate } from "react-router-dom";
 import { Createuser } from '../../config/firebase.js';
-import { useState, useEffect } from 'react';
-import { onAuthStateChangedHandler } from '../../config/firebase';
+import { useState } from 'react';
 
 function SingUp() {
     const navigate = useNavigate();
@@ -19,16 +18,6 @@ function SingUp() {
             alert(e.message)
         }
     }
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChangedHandler((isLoggedIn, useruid) => {
-            if (isLoggedIn) {
-                navigate('/dashboard');
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     return <div id="sign-up-page">
         <div className="sign-up" id="form-1">

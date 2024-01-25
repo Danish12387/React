@@ -1,8 +1,7 @@
 import './index.css'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Signin } from '../../config/firebase.js';
-import { onAuthStateChangedHandler } from '../../config/firebase';
 
 function Login() {
     const navigate = useNavigate();
@@ -28,16 +27,6 @@ function Login() {
             }
         }
     };
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChangedHandler((isLoggedIn, useruid) => {
-            if (isLoggedIn) {
-                navigate('/dashboard');
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     return (
         <div id="login-page">

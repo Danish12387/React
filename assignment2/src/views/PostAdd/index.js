@@ -6,22 +6,26 @@ import { useNavigate } from "react-router-dom";
 
 function Post() {
   const [title, setTitle] = useState();
-  const [desc, setDesc] = useState();
+  const [description, setDesc] = useState();
   const [price, setPrice] = useState();
   const [img, setImg] = useState('');
+  const [stock, setStock] = useState();
 
   const navigate = useNavigate();
 
+  const data = { title, description, price, img, stock };
+  
   const addPost = async () => {
+    if (!title || !description || !price || !img || !stock) return alert('All fields must be filled!');
     try {
       await onAuthStateChangedHandler(async (isLoggedIn, useruid) => {
         if (isLoggedIn) {
-          const data = { title, desc, price, img };
           await PostAdd(data);
           setTitle('')
           setDesc('')
           setPrice('')
           setImg('')
+          setStock()
         } else {
           alert('User not authenticated');
           navigate('/');
@@ -34,32 +38,39 @@ function Post() {
 
   return (
     <div className="post_main">
-      <h2>POST YOUR ADD</h2>
-      <div className='add'>
-        <h3>INCLUDE SOME DETAILS</h3>
+      <div className="post_div">
+        <h2>POST YOUR ADD</h2>
+        <div className='add'>
+          <h3>INCLUDE SOME DETAILS</h3>
 
-        <label>
-          <span>Add Title: </span>
-          <input onChange={(e) => setTitle(e.target.value)} value={title} type="text"/>
-        </label>
+          <label>
+            <span>Add Title: </span>
+            <input onChange={(e) => setTitle(e.target.value)} value={title} type="text" className="text_input" />
+          </label>
 
-        <label>
-          <span>Description: </span>
-          <input onChange={(e) => setDesc(e.target.value)} value={desc} type="text"/>
-        </label>
+          <label>
+            <span>Description: </span>
+            <input onChange={(e) => setDesc(e.target.value)} value={description} type="text" className="text_input" />
+          </label>
 
-        <label>
-          <span>Price: </span>
-          <input onChange={(e) => setPrice(e.target.value)} value={price} type="text"/>
-        </label>
-        <label>
-          <span>Images: </span>
-          <input onChange={(e) => setImg(e.target.value)} value={img} type="file" />
-        </label>
-        <button onClick={addPost}>Post Now</button>
-      </div>
+          <label>
+            <span>Price: </span>
+            <input onChange={(e) => setPrice(e.target.value)} value={price} type="number" className="text_input" />
+          </label>
 
-      {/*
+          <label>
+            <span>Stock: </span>
+            <input onChange={(e) => setStock(e.target.value)} value={stock} type="number" className="text_input" />
+          </label>
+
+          <label>
+            <span>Images: </span>
+            <input onChange={(e) => setImg(e.target.value)} value={img} type="file" />
+          </label>
+          <button onClick={addPost}>Post Now</button>
+        </div>
+
+        {/*
       <div className='Post_main_div'>
         <h3>CHOOSE A CATEGORY</h3>
         <div className='Post_second_main'>
@@ -85,6 +96,7 @@ function Post() {
           </div>
         </div>
       </div> */}
+      </div>
     </div>
   )
 }

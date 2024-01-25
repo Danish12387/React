@@ -14,7 +14,7 @@ function Details() {
     }, [])
 
     if (!singleProd) {
-        return <div>loading...</div>
+        return <h2>loading...</h2>
     }
 
     const { price, description, images, title } = singleProd;

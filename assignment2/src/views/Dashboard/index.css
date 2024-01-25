@@ -1,7 +1,14 @@
+.dash_baap {
+    width: 98.9vw;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .dashboard {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 0 5px;
-    margin-top: 50px;
+    width: 1332px;
 }
