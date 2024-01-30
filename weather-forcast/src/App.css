@@ -52,6 +52,13 @@ nav button {
   border-radius: 50px;
   border: 1px solid;
   cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
+#weather-info{
+  background-color: rgb(13, 23, 34);
+  margin-bottom: 40px;
 }
 
 #head {
@@ -70,8 +77,8 @@ nav button {
 }
 
 .upper-box img {
-  height: 150px;
-  width: 150px;
+  height: 120px;
+  width: 120px;
 }
 
 .temp {
@@ -97,8 +104,8 @@ nav button {
 
 .lower-box .boxes {
   background-color: rgb(25, 41, 56);
-  height: 100px;
-  width: 130px;
+  height: 120px;
+  width: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,4 +119,12 @@ nav button {
 
 #data {
   font-size: 20px;
+}
+
+.heading{
+  display: none;
+}
+
+#btn {
+  margin-right: 10px;
 }
