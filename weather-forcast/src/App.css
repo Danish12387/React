@@ -111,6 +111,7 @@ nav button {
   align-items: center;
   justify-content: space-evenly;
   border-radius: 10px;
+  text-align: center;
 }
 
 .inner-text {
