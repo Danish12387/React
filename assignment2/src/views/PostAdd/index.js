@@ -18,7 +18,7 @@ function Post() {
   const addPost = async () => {
     if (!title || !description || !price || !img || !stock) return alert('All fields must be filled!');
     try {
-      await onAuthStateChangedHandler(async (isLoggedIn, useruid) => {
+      await onAuthStateChangedHandler(async (isLoggedIn) => {
         if (isLoggedIn) {
           await PostAdd(data);
           setTitle('')

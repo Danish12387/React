@@ -2,10 +2,13 @@ import './index.css';
 import { useState, useEffect } from 'react';
 import search from '../../search.png';
 import { useNavigate } from 'react-router-dom';
+import { updateTheme } from '../../store/themeSlice';
+import { useDispatch } from 'react-redux'; 
 
 function Navbar() {
     const [scrollPosition, setScrollPosition] = useState(0);
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -18,6 +21,20 @@ function Navbar() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const [color, setColor ] = useState();
+
+    const randomColor = ()=>{
+        let random1 = Math.ceil(Math.random() * 256);
+        let random2 = Math.ceil(Math.random() * 256);
+        let random3 = Math.ceil(Math.random() * 256);
+        setColor(`rgb(${random1}, ${random2}, ${random3})`);
+    }
+
+    const clicked = ()=>{
+        randomColor()
+        dispatch(updateTheme(color))
+    }
 
     return <nav className={scrollPosition > 20 ? 'scroll-on' : ''}>
         <div className='nav_father_div'>
@@ -35,6 +52,7 @@ function Navbar() {
                     </div>
                     <span style={{ 'fontSize': 11, 'fontWeight': 'bold' }}>PROPERTY</span>
                 </div>
+                <button onClick={clicked}>Theme</button>
             </div>
             <div className='nav_main_div'>
                 <div>
