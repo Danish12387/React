@@ -2,16 +2,28 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import './index.css';
 import SimpleImageSlider from "react-simple-image-slider"
+import { GetSinglePro } from '../../config/firebase';
 
 function Details() {
     const [singleProd, SetSingleProd] = useState();
     const { Id } = useParams();
 
+    // useEffect(() => {
+    //     fetch(`https://dummyjson.com/products/${Id}`)
+    //         .then(res => res.json())
+    //         .then(res => SetSingleProd(res));
+    // }, [])
+
     useEffect(() => {
-        fetch(`https://dummyjson.com/products/${Id}`)
-            .then(res => res.json())
-            .then(res => SetSingleProd(res));
+        fetchData();
     }, [])
+
+    async function fetchData() {
+
+        const res = await GetSinglePro(Id);
+        // console.log(res);
+        SetSingleProd(res);
+    }
 
     if (!singleProd) {
         return <h2>loading...</h2>

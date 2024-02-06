@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, setDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, setDoc, getDocs, getDoc, query, where, onSnapshot } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
@@ -32,7 +32,15 @@ export async function GetAllProducts() {
   return pro;
 }
 
+export async function GetSinglePro(Id) {
 
+  const singleProdQuery = query(collection(db, 'Posts'), where('id', '==', Id));
+  
+  onSnapshot(singleProdQuery, (doc) => {
+    console.log(doc);
+  })
+  return doc;
+}
 
 export async function PostAdd(data) {
   const { title, description, price, img } = data;
@@ -43,7 +51,21 @@ export async function PostAdd(data) {
   await addDoc(collection(db, "Posts"), { title, price, description, id });
 
   const profilePhotoRef = ref(storage, `posts/${id}`)
-  await uploadBytes(profilePhotoRef, img)
+  try {
+    await uploadBytes(profilePhotoRef, img)
+
+      .then(async () => {
+        getDownloadURL(profilePhotoRef)
+          .then(async (url) => {
+            const images = [url]
+            await addDoc(collection(db, "Posts"), { title, price, description, id, images });
+          })
+          .catch((err) => console.log(err))
+      })
+  } catch (e) {
+    alert(e.message)
+  }
+
 
   alert('Successfully Posted Add!');
 }

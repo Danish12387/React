@@ -14,7 +14,7 @@ function Post() {
   const navigate = useNavigate();
 
   const data = { title, description, price, img, stock };
-  
+
   const addPost = async () => {
     if (!title || !description || !price || !img || !stock) return alert('All fields must be filled!');
     try {
@@ -25,7 +25,7 @@ function Post() {
           setDesc('')
           setPrice('')
           setImg('')
-          setStock()
+          setStock('')
         } else {
           alert('User not authenticated');
           navigate('/');
@@ -65,7 +65,7 @@ function Post() {
 
           <label>
             <span>Images: </span>
-            <input onChange={(e) => setImg(e.target.value)} value={img} type="file" />
+            <input onChange={(e) => setImg(e.target.files[0])} type="file" />
           </label>
           <button onClick={addPost}>Post Now</button>
         </div>
