@@ -19,27 +19,11 @@ function Dashboard() {
     setLoading(false)
   }
 
-
-  // function click() {
-  //   products.map(async (item) => {
-  //     try {
-  //       await GetAllProducts(item);
-  //     } catch (e) {
-  //       alert(e.message);
-  //     }
-
-  //     return <Card item={item} />
-  //   })
-  // }
-
   const theme = useSelector(state => state.theme);
 
   if (loading) return <h2>Loading...</h2>
 
   return <div className='dash_baap'  style={{backgroundColor: theme}}>
-    {/* <button onClick={click}>
-      click me
-    </button> */}
     <div className="dashboard">
       {products.map((item) => {
         return <Card item={item} />

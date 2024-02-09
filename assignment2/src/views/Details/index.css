@@ -20,3 +20,29 @@
     border-radius: 10px;
     padding: 10px 20px;
 }
+
+.map_cont {
+    height: 400px;
+    width: 400px;
+}
+
+.cart_btn {
+    width: 230px;
+    height: 50px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    /* background-color: #004c55; */
+    background-color: white;
+    border: 2px solid #002f34;
+    border-radius: 5px;
+    color: #002f34;
+    transition: background-color .8s ease-out, transform .3s ease-out, color .3s ease-out;
+}
+
+.cart_btn:hover {
+    background-color: #002f34;
+    color: white;
+    transform: scale(1.07);
+}

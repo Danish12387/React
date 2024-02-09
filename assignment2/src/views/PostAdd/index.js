@@ -8,15 +8,17 @@ function Post() {
   const [title, setTitle] = useState();
   const [description, setDesc] = useState();
   const [price, setPrice] = useState();
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState([]);
   const [stock, setStock] = useState();
+  const [thumb, setThumbnail] = useState();
 
   const navigate = useNavigate();
 
-  const data = { title, description, price, img, stock };
-
   const addPost = async () => {
-    if (!title || !description || !price || !img || !stock) return alert('All fields must be filled!');
+    if (!title || !description || !price || !img || !stock || !thumb) return alert('All fields must be filled!');
+
+    const data = { title, description, price, img, stock, thumb };
+
     try {
       await onAuthStateChangedHandler(async (isLoggedIn) => {
         if (isLoggedIn) {
@@ -63,10 +65,25 @@ function Post() {
             <input onChange={(e) => setStock(e.target.value)} value={stock} type="number" className="text_input" />
           </label>
 
+          <span>Thumbnail: </span>
           <label>
-            <span>Images: </span>
-            <input onChange={(e) => setImg(e.target.files[0])} type="file" />
+            <input onChange={(e) => setThumbnail(()=> e.target.files[0])} type="file" />
           </label>
+
+          <span>Images: </span>
+          <label>
+            <input onChange={(e) => setImg( ()=> [...img ,e.target.files[0]])} type="file" />
+          </label>
+          <label>
+            <input onChange={(e) => setImg(()=> [...img ,e.target.files[0]])} type="file" />
+          </label>
+          <label>
+            <input onChange={(e) => setImg(()=> [...img ,e.target.files[0]])} type="file" />
+          </label>
+          <label>
+            <input onChange={(e) => setImg(()=> [...img ,e.target.files[0]])} type="file" />
+          </label>
+
           <button onClick={addPost}>Post Now</button>
         </div>
 

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, setDoc, getDocs, getDoc, query, where, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -27,44 +27,54 @@ export async function GetAllProducts() {
   const querySnapshot = await getDocs(collection(db, "Posts"));
   const pro = [];
   querySnapshot.forEach((doc) => {
-    pro.push({ id: doc.id, ...doc.data() })
+    pro.push({ uid: doc.id, ...doc.data() })
   })
   return pro;
 }
 
 export async function GetSinglePro(Id) {
 
-  const singleProdQuery = query(collection(db, 'Posts'), where('id', '==', Id));
-  
-  onSnapshot(singleProdQuery, (doc) => {
-    console.log(doc);
-  })
-  return doc;
+  const docRef = doc(db, "Posts", Id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return { ...docSnap.data(), id: Id }
+  }
+  else {
+    return {}
+  }
 }
 
 export async function PostAdd(data) {
-  const { title, description, price, img } = data;
+  const { title, description, price, img, thumb, stock } = data;
   if (!id) {
     throw new Error('User not authenticated');
   }
 
-  await addDoc(collection(db, "Posts"), { title, price, description, id });
+  const images = [];
+  let thumbnail;
 
-  const profilePhotoRef = ref(storage, `posts/${id}`)
   try {
-    await uploadBytes(profilePhotoRef, img)
+    await Promise.all(
+      img.map(async (item) => {
+        const profilePhotoRef = ref(storage, `posts/${id}/images/${item.name}`)
+        await uploadBytes(profilePhotoRef, item);
 
-      .then(async () => {
-        getDownloadURL(profilePhotoRef)
-          .then(async (url) => {
-            const images = [url]
-            await addDoc(collection(db, "Posts"), { title, price, description, id, images });
-          })
-          .catch((err) => console.log(err))
+        const downloadUrl = await getDownloadURL(profilePhotoRef);
+        images.push(downloadUrl);
+
       })
+    );
+    const thumbnailRef = ref(storage, `posts/${id}/thumbnail/${thumb.name}`)
+    await uploadBytes(thumbnailRef, thumb);
+
+    const downloadUrl2 = await getDownloadURL(thumbnailRef);
+    thumbnail = downloadUrl2;
+
   } catch (e) {
     alert(e.message)
   }
+  await addDoc(collection(db, "Posts"), { title, price, description, id, images, thumbnail, stock });
 
 
   alert('Successfully Posted Add!');

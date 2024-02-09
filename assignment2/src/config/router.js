@@ -55,7 +55,7 @@ function Layout() {
     useEffect(()=>{
         const path  = window.location.pathname;
         if(user){
-            if(path === '/signup' || path === '/login' || path === '/dashboard/postAdd'){
+            if(path === '/signup' || path === '/login'){
                 navigate('/');
             }
         }else {
