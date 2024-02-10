@@ -3,22 +3,25 @@ import { useParams } from "react-router-dom";
 import './index.css';
 import SimpleImageSlider from "react-simple-image-slider"
 import { GetSinglePro } from '../../config/firebase';
-// import { Map, TileLayer } from 'react-leaflet';
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
-import "leaflet/dist/leaflet.css";
 import { useDispatch } from "react-redux";
 import updateCart from '../../store/CartSlice';
+import Map, { Marker } from 'react-map-gl';
 
 function Details() {
     const [singleProd, SetSingleProd] = useState();
     const { Id } = useParams();
     const dispatch = useDispatch();
-    // const[center, setCenter] = useState({ lat: 13.084622, lng: 80.248357 });
-    // const ZOOM_LEVEL = 9;
-
+    const [location, setLocation] = useState()
 
     useEffect(() => {
         fetchData();
+    }, [])
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((location) => {
+            const { latitude, longitude } = location.coords
+            setLocation({ latitude, longitude })
+        })
     }, [])
 
     async function fetchData() {
@@ -27,7 +30,7 @@ function Details() {
         SetSingleProd(res);
     }
 
-    const addToCart = ()=>{
+    const addToCart = () => {
         dispatch(updateCart(singleProd));
     }
 
@@ -58,25 +61,32 @@ function Details() {
             <button onClick={addToCart} className="cart_btn">Add to Cart</button>
         </div>
         <div className="map_cont">
-            {/* <Map
-                center={center}
-                zoom={ZOOM_LEVEL}
-            >
-                <TileLayer url="https://api.maptiler.com/maps/satellite/256/{z}/{x}/{y}.jpg?key=lLlGrpOl0cSkmV62uHvV"
-                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
-            </Map> */}
+        {location && <Map
+            mapboxAccessToken=""
+            initialViewState={{
+                longitude: 24.8511959,
+                latitude: 67.0517795,
+                zoom: 16
+            }}
+            style={{ width: 600, height: 400, overflow: 'hidden' }}
+            mapStyle="mapbox://styles/muzammil144/ckth155c31as017qfkormprrh"
+        >
+            {/* <Marker
+                draggable={true}
+                onDragEnd={e => console.log(e)}
+                offsetLeft={-20}
+                offsetTop={-10}
+                longitude={location.longitude} latitude={location.latitude} anchor="bottom" >
+                <p
+                        role="img"
+                        className="cursor-pointer text-2xl animate-bounce"
+                        aria-label="pin"
+                      >
+                        📍
+                      </p>
+            </Marker> */}
+        </Map>}
 
-            <MapContainer center={[51.505, -0.09]} zoom={5} scrollWheelZoom={false}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://api.maptiler.com/maps/satellite/256/{z}/{x}/{y}.jpg?key=lLlGrpOl0cSkmV62uHvV"
-                />
-                {/* <Marker position={[51.505, -0.09]}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker> */}
-            </MapContainer>
         </div>
     </div>
 }
