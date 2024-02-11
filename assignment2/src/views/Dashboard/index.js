@@ -19,7 +19,7 @@ function Dashboard() {
     setLoading(false)
   }
 
-  const theme = useSelector(state => state.theme);
+  const theme = useSelector(state => state.themeReducer.theme);
 
   if (loading) return <h2>Loading...</h2>
 

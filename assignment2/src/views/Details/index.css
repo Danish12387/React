@@ -1,9 +1,7 @@
 
 .details {
-    display: flex;
     padding: 0 100px;
     margin: 20px 0;
-    justify-content: space-between;
 }
 
 .details img{
@@ -21,9 +19,17 @@
     padding: 10px 20px;
 }
 
+.details_main_div {
+    display: flex;
+    padding: 0 100px;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+
 .map_cont {
-    height: 400px;
-    width: 400px;
+    margin-top: 50px;
+    height: 600px;
+    width: 100%;
 }
 
 .cart_btn {

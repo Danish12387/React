@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider, Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase';
 import Dashboard from "../views/Dashboard";
 import Details from "../views/Details";
 import SingUp from "../views/SingUp";
 import Login from "../views/Login";
-import PostAdd from "../views/PostAdd"
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from './firebase';
-import Header from '../component/Navbar'
+import PostAdd from "../views/PostAdd";
+import Header from '../component/Navbar';
+import Cart from "../views/Cart";
 
 const router = createBrowserRouter([
     {
@@ -27,13 +28,17 @@ const router = createBrowserRouter([
                 element: <SingUp />,
             },
             {
-                path: "/dashboard/postAdd",
+                path: "/postAdd",
                 element: <PostAdd />,
             },
             {
                 path: "/details/:Id",
                 element: <Details />,
-            }
+            },
+            {
+                path: "/cart",
+                element: <Cart />,
+            },
         ]
     }
 ]);
@@ -59,7 +64,7 @@ function Layout() {
                 navigate('/');
             }
         }else {
-            if(path === '/' || path === '/details/') {
+            if(path === '/' || path === '/details/' || path === '/postAdd') {
                 navigate('/login');
             }
         }

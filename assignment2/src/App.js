@@ -9,7 +9,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      
         <div className="App">
           <div className='firstDIv'>
             <div className='router'>
@@ -18,9 +18,9 @@ function App() {
           </div>
 
         </div>
-      </PersistGate>
+     
     </Provider>
   );
 }
-
+{/* <PersistGate loading={null} persistor={persistor}></PersistGate> */}
 export default App;

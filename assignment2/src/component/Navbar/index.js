@@ -3,13 +3,12 @@ import { useState, useEffect } from 'react';
 import search from '../../search.png';
 import { useNavigate } from 'react-router-dom';
 import { updateTheme } from '../../store/themeSlice';
-import { useDispatch, useSelector } from 'react-redux'; 
+import { useDispatch } from 'react-redux'; 
 
 function Navbar() {
     const [scrollPosition, setScrollPosition] = useState(0);
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const cart = useSelector(state => state.cartReducer.cart);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -35,14 +34,6 @@ function Navbar() {
     const clicked = ()=>{
         randomColor()
         dispatch(updateTheme(color))
-    }
-
-    const cartFunction = ()=> {
-        cart.map((item)=>{
-            return <div>
-                ${item}
-            </div>
-        })
     }
 
     return <nav className={scrollPosition > 20 ? 'scroll-on' : ''}>
@@ -82,7 +73,7 @@ function Navbar() {
                     </div>
                 </div>
                 <div className='nav_side_div'>
-                    <img onClick={cartFunction} src="https://www.olx.com.pk/assets/iconChat_noinline.31f5df4a6a21fc770ed6863958662677.svg" alt="Go to chat" />
+                    <img onClick={()=> navigate('/cart')}  src="https://www.olx.com.pk/assets/iconChat_noinline.31f5df4a6a21fc770ed6863958662677.svg" alt="Go to chat" />
                     <img style={{ marginLeft: '7px' }} src="https://www.olx.com.pk/assets/iconNotifications_noinline.4444f6b42acbe30d772d80ef1225f574.svg" />
                     <div className='nav_prof_img_div'>
                         <img src='https://www.olx.com.pk/assets/iconProfilePicture.7975761176487dc62e25536d9a36a61d.png' />
@@ -91,7 +82,7 @@ function Navbar() {
                 </div>
                 <div className='btn_div'>
                     <img src='https://www.olx.com.pk/assets/iconSellBorder_noinline.d9eebe038fbfae9f90fd61d971037e02.svg' />
-                    <button onClick={()=> navigate('/dashboard/postAdd')} class="my-button" ><img src='https://www.olx.com.pk/assets/iconPlusSell_noinline.75fc7ea23e80b50447cf5757d8ef083a.svg' /> SELL</button>
+                    <button onClick={()=> navigate('/postAdd')} class="my-button" ><img src='https://www.olx.com.pk/assets/iconPlusSell_noinline.75fc7ea23e80b50447cf5757d8ef083a.svg' /> SELL</button>
                 </div>
             </div>
         </div>

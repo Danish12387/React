@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux'
-import CartSlice from './CartSlice'
+import { combineReducers } from 'redux';
+import cartSlice from './cartSlice'
+import themeSlice from './themeSlice';
 
 const rootReducer = combineReducers({
-    cartReducer: CartSlice.reducer
+    themeReducer: themeSlice.reducer,
+    cartReducer: cartSlice.reducer
 })
 
 export default rootReducer;
