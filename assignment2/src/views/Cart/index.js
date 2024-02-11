@@ -8,7 +8,7 @@ export default function Cart() {
 
     useEffect(() => {
         setCart(cart);
-    }, [cart]);
+    }, [cart])
 
     if (!carts) {
         return <h3>There are no items in this cart</h3>
@@ -20,7 +20,7 @@ export default function Cart() {
                 return <div className='cart_item_div'>
                     <img src={item.thumbnail}/>
                     <div>
-                        
+
                     </div>
                 </div>
             })}
