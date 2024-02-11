@@ -12,10 +12,11 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 98.9vw;
 }
 
 .nav_father_div {
-    width: 1340px;
+    /* width: 98vw; */
 }
 
 .logo {

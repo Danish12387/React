@@ -9,9 +9,10 @@ const cartSlice = createSlice({
         updateCart: (state, data) => {
             state.cart.push(data.payload);
         },
-        removeFromCart: state => {
-            // state.cart = []
-        }
+        removeFromCart: (state, action) => {
+            const uidToRemove = action.payload;
+            state.cart = state.cart.filter(item => item.id !== uidToRemove);
+        },
     }
 })
 
