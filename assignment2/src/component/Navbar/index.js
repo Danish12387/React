@@ -55,7 +55,7 @@ function Navbar() {
                     </div>
                     <span style={{ 'fontSize': 11, 'fontWeight': 'bold' }}>PROPERTY</span>
                 </div>
-                <button onClick={clicked}>Theme</button>
+                {/* <button onClick={clicked}>Theme</button> */}
             </div>
             <div className='nav_main_div'>
                 <div>

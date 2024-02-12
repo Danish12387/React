@@ -1,8 +1,16 @@
-import "./index.css"
-import PostAddDiv from '../../component/PostAddDiv'
-import { useState } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { PostAdd, onAuthStateChangedHandler } from '../../config/firebase';
 import { useNavigate } from "react-router-dom";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import PostAddDiv from '../../component/PostAddDiv'
+import "./index.css"
 
 function Post() {
   const [title, setTitle] = useState();
@@ -11,8 +19,52 @@ function Post() {
   const [img, setImg] = useState([]);
   const [stock, setStock] = useState();
   const [thumb, setThumbnail] = useState();
+  const [location, setLocation] = useState()
 
   const navigate = useNavigate();
+
+  const markerIcon = new L.Icon({
+    iconUrl: require("../../location-map-marker-icon-symbol-on-transparent-background-free-png.webp"),
+    iconSize: [35, 35],
+    popupAnchor: [0, -14]
+  })
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((location) => {
+      const { latitude, longitude } = location.coords
+      setLocation([latitude, longitude])
+    })
+  }, [])
+
+  function DraggableMarker() {
+    const markerRef = useRef(null)
+
+    const eventHandlers = useMemo(
+      () => ({
+        dragend() {
+          const marker = markerRef.current
+          if (marker != null) {
+            setLocation(marker.getLatLng())
+          }
+        },
+      }),
+      [],
+    )
+
+    return (
+      <Marker
+        draggable={true}
+        eventHandlers={eventHandlers}
+        position={location}
+        ref={markerRef}
+        icon={markerIcon}
+      >
+        <Popup minWidth={90}>
+          Drag to set location
+        </Popup>
+      </Marker>
+    )
+  }
 
   const addPost = async () => {
     if (!title || !description || !price || !img || !stock || !thumb) return alert('All fields must be filled!');
@@ -66,23 +118,43 @@ function Post() {
           </label>
 
           <span>Thumbnail: </span>
-          <label>
-            <input onChange={(e) => setThumbnail(()=> e.target.files[0])} type="file" />
+          <label className="img_label">
+            <input onChange={(e) => setThumbnail(() => e.target.files[0])} type="file" />
           </label>
 
           <span>Images: </span>
-          <label>
-            <input onChange={(e) => setImg( ()=> [...img ,e.target.files[0]])} type="file" />
+          
+          <label className="img_label">
+            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
           </label>
-          <label>
-            <input onChange={(e) => setImg(()=> [...img ,e.target.files[0]])} type="file" />
+
+          <label className="img_label">
+            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
           </label>
-          <label>
-            <input onChange={(e) => setImg(()=> [...img ,e.target.files[0]])} type="file" />
+
+          <label className="img_label">
+            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
           </label>
-          <label>
-            <input onChange={(e) => setImg(()=> [...img ,e.target.files[0]])} type="file" />
+
+          <label className="img_label">
+            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
           </label>
+          
+          <div className="map_cont">
+            <h3>Set Location:</h3>
+            {location && <MapContainer
+              center={location}
+              zoom={13}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <TileLayer
+                url='https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=lLlGrpOl0cSkmV62uHvV'
+                attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+              />
+              <DraggableMarker />
+
+            </MapContainer>}
+          </div>
 
           <button onClick={addPost}>Post Now</button>
         </div>

@@ -1,17 +1,16 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import './index.css';
-import SimpleImageSlider from "react-simple-image-slider"
 import { GetSinglePro } from '../../config/firebase';
 import { useDispatch } from "react-redux";
 import { updateCart } from '../../store/cartSlice';
+import SimpleImageSlider from "react-simple-image-slider"
 import React from 'react';
+import './index.css';
 import {
     MapContainer,
     TileLayer,
     Marker,
     Popup,
-    Polygon
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -20,51 +19,13 @@ function Details() {
     const [singleProd, setSingleProd] = useState();
     const { Id } = useParams();
     const dispatch = useDispatch();
-    const [location, setLocation] = useState()
+    const [location, setLocation] = useState([24.887276379066083, 67.00768745849048])
 
     const markerIcon = new L.Icon({
         iconUrl: require("../../location-map-marker-icon-symbol-on-transparent-background-free-png.webp"),
         iconSize: [35, 35],
         popupAnchor: [0, -14]
     })
-
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition((location) => {
-            const { latitude, longitude } = location.coords
-            setLocation([latitude, longitude])
-        })
-    }, [])
-
-    function DraggableMarker() {
-        const markerRef = useRef(null)
-
-        const eventHandlers = useMemo(
-            () => ({
-                dragend() {
-                    const marker = markerRef.current
-                    if (marker != null) {
-                        setLocation(marker.getLatLng())
-                    }
-                },
-            }),
-            [],
-        )
-
-        return (
-            <Marker
-                draggable={true}
-                eventHandlers={eventHandlers}
-                position={location}
-                ref={markerRef}
-                icon={markerIcon}
-            >
-                <Popup minWidth={90}>
-                    Location Locked
-                </Popup>
-            </Marker>
-        )
-    }
-
 
     useEffect(() => {
         fetchData();
@@ -108,7 +69,7 @@ function Details() {
                 <button onClick={addToCart} className="cart_btn">Add to Cart</button>
             </div>
         </div>
-        
+
         <div className="map_cont">
             <MapContainer
                 center={location}
@@ -119,7 +80,15 @@ function Details() {
                     url='https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=lLlGrpOl0cSkmV62uHvV'
                     attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
                 />
-                <DraggableMarker />
+                <Marker
+                    draggable={false}
+                    position={location}
+                    icon={markerIcon}
+                >
+                    <Popup minWidth={90}>
+                        Location Locked
+                    </Popup>
+                </Marker>
 
             </MapContainer>
         </div>

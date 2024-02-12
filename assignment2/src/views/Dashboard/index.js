@@ -1,8 +1,8 @@
-import './index.css';
 import { useEffect, useState } from "react";
-import Card from '../../component/Cards';
 import { GetAllProducts } from '../../config/firebase';
 import { useSelector } from 'react-redux'; 
+import Card from '../../component/Cards';
+import './index.css';
 
 function Dashboard() {
   const [products, SetProducts] = useState([]);
