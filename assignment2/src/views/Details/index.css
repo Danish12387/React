@@ -26,10 +26,13 @@
     justify-content: space-between;
 }
 
-.map_cont {
-    margin-top: 50px;
+.map_cont_details {
+    margin-top: 20px;
     height: 600px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cart_btn {

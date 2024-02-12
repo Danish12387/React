@@ -19,7 +19,7 @@ function Details() {
     const [singleProd, setSingleProd] = useState();
     const { Id } = useParams();
     const dispatch = useDispatch();
-    const [location, setLocation] = useState([24.887276379066083, 67.00768745849048])
+    const [location, setLocation] = useState()
 
     const markerIcon = new L.Icon({
         iconUrl: require("../../location-map-marker-icon-symbol-on-transparent-background-free-png.webp"),
@@ -35,6 +35,7 @@ function Details() {
 
         const res = await GetSinglePro(Id);
         setSingleProd(res);
+        setLocation(res.locations);
     }
 
     if (!singleProd) {
@@ -69,12 +70,12 @@ function Details() {
                 <button onClick={addToCart} className="cart_btn">Add to Cart</button>
             </div>
         </div>
-
-        <div className="map_cont">
+        {location && <div className="map_cont_details">
+        <h2>Location</h2>
             <MapContainer
                 center={location}
                 zoom={13}
-                style={{ width: '100%', height: '100%' }}
+                style={{ width: '86%', height: '100%' }}
             >
                 <TileLayer
                     url='https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=lLlGrpOl0cSkmV62uHvV'
@@ -91,7 +92,7 @@ function Details() {
                 </Marker>
 
             </MapContainer>
-        </div>
+        </div>}
     </div>
 }
 

@@ -44,7 +44,7 @@ function Post() {
         dragend() {
           const marker = markerRef.current
           if (marker != null) {
-            setLocation(marker.getLatLng())
+            setLocation([marker.getLatLng().lat, marker.getLatLng().lng])
           }
         },
       }),
@@ -69,7 +69,7 @@ function Post() {
   const addPost = async () => {
     if (!title || !description || !price || !img || !stock || !thumb) return alert('All fields must be filled!');
 
-    const data = { title, description, price, img, stock, thumb };
+    const data = { title, description, price, img, stock, thumb, location };
 
     try {
       await onAuthStateChangedHandler(async (isLoggedIn) => {

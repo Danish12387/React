@@ -46,7 +46,7 @@ export async function GetSinglePro(Id) {
 }
 
 export async function PostAdd(data) {
-  const { title, description, price, img, thumb, stock } = data;
+  const { title, description, price, img, thumb, stock, location } = data;
   if (!id) {
     throw new Error('User not authenticated');
   }
@@ -74,7 +74,7 @@ export async function PostAdd(data) {
   } catch (e) {
     alert(e.message)
   }
-  await addDoc(collection(db, "Posts"), { title, price, description, id, images, thumbnail, stock });
+  await addDoc(collection(db, "Posts"), { title, price, description, id, images, thumbnail, stock, locations: location });
 
 
   alert('Successfully Posted Add!');
