@@ -5,9 +5,9 @@
     width: 100%;
     height: auto;
     min-height: 100vh;
-    padding: 0 150px;
+    padding: 0 100px;
     flex-wrap: wrap;
-    background-color: #222;
+    background-color: white;
 }
 
 .detail_left_div {
@@ -42,6 +42,10 @@
     margin-bottom: 20px;
 }
 
+.detail_right_div label {
+     width: 100%;
+}
+
 .detail_right_div input {
     height: 48px;
     width: 100%;
@@ -50,6 +54,7 @@
     border-radius: 5px;
     padding: 0px 5px;
 }
+
 
 .detail_right_div button {
     width: 200px;
@@ -68,6 +73,7 @@
 
 .spinner {
     width: 3em;
+    margin: auto;
     height: 3em;
     cursor: not-allowed;
     border-radius: 50%;
@@ -92,3 +98,4 @@
         transform: rotate(360deg);
     }
 }
+

@@ -13,6 +13,7 @@ export default async function Home() {
       <h1>Find any meme here!</h1>
       {memes.map((item) => {
         return <Link
+          key={item.id}
           href={`/detail/${item.id}`}
           className=""
           rel="noopener noreferrer"
