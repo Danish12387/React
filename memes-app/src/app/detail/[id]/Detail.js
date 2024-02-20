@@ -23,8 +23,8 @@ const Detail = ({ memesData, id }) => {
     }, [])
 
     const generateMeme = async () => {
-        setLoading(true)
         if (!text1 || !text2) return alert('All fields must be filled!')
+        setLoading(true)
         const res = await fetch(`https://api.imgflip.com/caption_image?template_id=${id}&username=DanishKing&password=kinganonymous&text0=${text1}&text1=${text2}`);
         const result = await res.json()
         setResult(result);
