@@ -10,6 +10,7 @@ const Detail = ({ memesData, id }) => {
     const [text2, setText2] = useState();
     const [result, setResult] = useState();
     const [Loading, setLoading] = useState(false);
+    const [imgloader, setImgLoader] = useState(false);
 
     const getSingleMeme = () => {
         memesData.map((item) => {
@@ -30,6 +31,7 @@ const Detail = ({ memesData, id }) => {
         const result = await res.json()
         setResult(result);
         setLoading(false)
+        setImgLoader(true);
     }
 
     function downloadImg() {
@@ -71,7 +73,7 @@ const Detail = ({ memesData, id }) => {
                         <div className="spinnerin"></div>
                     </div>}
                 </div>
-                {Loading && <div className='down_img_div'>
+                {imgloader && <div className='down_img_div'>
                     <img className='meme_img' src={result?.data?.url} />
                     {/* <button onClick={downloadImg} className='img_download_btn'>Download</button> */}
                     <button onClick={downloadImg} className="button" style={{verticalAlign: 'middle'}}><span>Download</span></button>
