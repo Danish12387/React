@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { saveAs } from 'file-saver';
 import './index.css';
 
 const Detail = ({ memesData, id }) => {
@@ -29,7 +30,16 @@ const Detail = ({ memesData, id }) => {
         const result = await res.json()
         setResult(result);
         setLoading(false)
+    }
 
+    function downloadImg() {
+        let imgPath = result?.data?.url;
+        let fileName = getFileName(imgPath);
+        saveAs(imgPath, fileName)
+    }
+
+    function getFileName(str) {
+        return str.substring(str.lastIndexOf('/') + 1);
     }
 
     if (!data) return <h1 style={{ textAlign: 'center' }} >Loading...</h1>
@@ -57,11 +67,15 @@ const Detail = ({ memesData, id }) => {
             </div>
             <div>
                 <div className='spinner_div'>
-                    {Loading && <div class="spinner">
-                        <div class="spinnerin"></div>
+                    {Loading && <div className="spinner">
+                        <div className="spinnerin"></div>
                     </div>}
                 </div>
-                {!Loading && <img className='meme_img' src={result?.data?.url} />}
+                {!Loading && <div className='down_img_div'>
+                    <img className='meme_img' src={result?.data?.url} />
+                    {/* <button onClick={downloadImg} className='img_download_btn'>Download</button> */}
+                    <button onClick={downloadImg} className="button" style={{verticalAlign: 'middle'}}><span>Download</span></button>
+                </div>}
             </div>
 
         </div>
