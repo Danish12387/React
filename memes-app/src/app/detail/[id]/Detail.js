@@ -71,7 +71,7 @@ const Detail = ({ memesData, id }) => {
                         <div className="spinnerin"></div>
                     </div>}
                 </div>
-                {!Loading && <div className='down_img_div'>
+                {Loading && <div className='down_img_div'>
                     <img className='meme_img' src={result?.data?.url} />
                     {/* <button onClick={downloadImg} className='img_download_btn'>Download</button> */}
                     <button onClick={downloadImg} className="button" style={{verticalAlign: 'middle'}}><span>Download</span></button>
