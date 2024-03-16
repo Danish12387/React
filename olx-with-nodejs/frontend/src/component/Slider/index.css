@@ -1,0 +1,10 @@
+.image_slider{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.image_slider button{
+    width: 50px;
+    height: 50px;
+}

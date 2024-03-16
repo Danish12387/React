@@ -14,7 +14,7 @@ function Login() {
 
         try {
             await Signin(userInfo);
-            navigate('/dashboard');
+            navigate('/');
         } catch (error) {
             console.error(error);
 

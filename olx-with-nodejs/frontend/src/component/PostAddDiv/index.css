@@ -1,0 +1,21 @@
+.PostAdOptionDiv{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(180, 180, 180);
+}
+
+.PostAdOptionDiv img{
+    margin-left: 20px;
+}
+
+.PostAdOptionDiv span{
+    margin-left: 20px;
+    width: 70%;
+    text-align: left;
+}
+
+.PostAdOptionDiv_arrow{
+    height: 12px ;
+    width: 12px;
+}
