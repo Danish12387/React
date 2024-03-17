@@ -2,6 +2,8 @@ import './index.css'
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Signin } from '../../config/firebase.js';
+import { useDispatch } from "react-redux";
+import { updateToken } from '../../store/tokenSlice.mjs';
 import Axios from 'axios';
 
 function Login() {
@@ -9,6 +11,7 @@ function Login() {
     const [password, setPass] = useState();
     const [email, setEmail] = useState();
     const [showPass, setShowPass] = useState(true);
+    const dispatch = useDispatch();
 
     // const signin = async () => {
     //     const userInfo = { email, password };
@@ -37,13 +40,18 @@ function Login() {
 
             if (loginn.data.message == 'User Not Found!') {
                 alert('Invalid email address');
+                return;
             }
 
             if (loginn.data.message == 'Invalid Password!') {
                 alert('Invalid password');
+                return;
             }
+            
+            dispatch(updateToken(loginn.data.token));
 
-            console.log(loginn.data);
+            navigate('/');
+
         }
         catch (e) {
             console.log(e.message);
@@ -58,7 +66,7 @@ function Login() {
                     <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter your Email" required />
                     <input onChange={(e) => setPass(e.target.value)} placeholder="Password" type={showPass && 'password'} required />
                     <label id="checkbox" onClick={() => setShowPass(!showPass)} ><input type="checkbox" id="checkbox-2" /> Show Password</label>
-                    <a href="" id="link" onClick={() => navigate('signup')}>create an account?</a>
+                    <a href="" id="link" onClick={() => navigate('/signup')}>create an account?</a>
                 </div>
                 <button className="btn" onClick={signin}>Login</button>
             </div>

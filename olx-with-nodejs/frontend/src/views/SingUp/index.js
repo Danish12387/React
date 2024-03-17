@@ -2,17 +2,35 @@ import './index.css';
 import { useNavigate } from "react-router-dom";
 import { Createuser } from '../../config/firebase.js';
 import { useState } from 'react';
+import Axios from 'axios';
 
 function SingUp() {
     const navigate = useNavigate();
     const [password, setPass] = useState();
     const [email, setEmail] = useState();
-    const [userName, setUserName] = useState();
+    const [fullName, setUserName] = useState();
     const [showPass, setShowPass] = useState(false);
+
+    // const signup = async () => {
+    //     try {
+    //         await Createuser({ email, password, userName })
+    //         navigate('/dashboard')
+    //     } catch (e) {
+    //         alert(e.message)
+    //     }
+    // }
 
     const signup = async () => {
         try {
-            await Createuser({ email, password, userName })
+            const signupp = await Axios.post("http://localhost:5000/register", {
+                email, password, fullName
+            })
+
+            if (signupp.data.message == 'Email already exists!') {
+                alert('Email already exists!');
+                return;
+            }
+
             navigate('/dashboard')
         } catch (e) {
             alert(e.message)
@@ -26,9 +44,9 @@ function SingUp() {
                 <input type="text" placeholder="User Name" required onChange={(e) => setUserName(e.target.value)} />
                 <input type="email" placeholder="Enter your Email" required onChange={(e) => setEmail(e.target.value)} />
                 <input placeholder="Password" required id="password-1" type={!showPass && 'password'} onChange={(e) => setPass(e.target.value)} />
-                <input placeholder="Enter Password Again" type={!showPass && 'password'} required id="password-2" />
+                <input placeholder="Enter Password Again" type={showPass ? 'password' : 'text'} required id="password-2" />
                 <label id="checkbox" onClick={() => setShowPass(!showPass)} ><input type="checkbox" id="checkbox-1" /> Show Password</label>
-                <a href="/" id="link">Already have an account?</a>
+                <a href="/login" id="link">Already have an account?</a>
             </div>
             <button className="btn" onClick={signup}>Sign Up</button>
         </div>

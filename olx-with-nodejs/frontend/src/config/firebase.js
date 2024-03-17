@@ -96,7 +96,6 @@ export async function Signin(userInfo) {
   alert('logged In Successfully!')
 }
 
-
 export const onAuthStateChangedHandler = (callback) => {
   return onAuthStateChanged(auth, (user) => {
     if (user) {

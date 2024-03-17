@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet, useNavigate } from "react-
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
+import { useSelector } from 'react-redux';
 import Dashboard from "../views/Dashboard";
 import Details from "../views/Details";
 import SingUp from "../views/SingUp";
@@ -9,6 +10,7 @@ import Login from "../views/Login";
 import PostAdd from "../views/PostAdd";
 import Header from '../component/Navbar';
 import Cart from "../views/Cart";
+import Axios from 'axios';
 
 const router = createBrowserRouter([
     {
@@ -46,35 +48,54 @@ const router = createBrowserRouter([
 function Layout() {
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
+    const tokenn = useSelector(state => state.tokenReducer.token);
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        onAuthStateChanged(auth, (user)=>{
-            setUser(user);
-            setLoading(false);
-        });
+    useEffect(() => {
+        // onAuthStateChanged(auth, (user)=>{
+        //     setUser(user);
+        // });
+        fetchedData()
+        setLoading(false);
+    }, [tokenn])
 
-    },[])
+    const fetchedData = async () => {
+        try {
+            const protecte = await Axios.get('http://localhost:5000/protectedRoute', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${tokenn}`
+                }
+            });
+            setUser(protecte);
 
+            if (protecte?.data?.message == 'Protected') {
+                navigate('/'); 
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
-    useEffect(()=>{
-        const path  = window.location.pathname;
-        if(user){
-            if(path === '/signup' || path === '/login'){
+    useEffect(() => {
+        const path = window.location.pathname;
+        if (user?.data?.message == 'Protected') {
+            if (path === '/signup' || path === '/login') {
                 navigate('/');
             }
-        }else {
-            if(path === '/' || path === '/details/' || path === '/postAdd') {
+        } else {
+            if (path === '/' || path === '/details/' || path === '/postAdd') {
                 navigate('/login');
             }
         }
-    },[window.location.pathname, user])
+    }, [window.location.pathname, user])
 
-    if(loading) return <h2>Loading...</h2>
+    if (loading) return <h2>Loading...</h2>
 
     return <div>
-        <Header/>
-        <Outlet/>
+        <Header />
+        <Outlet />
     </div>
 }
 

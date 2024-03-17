@@ -3,7 +3,6 @@ import { GetAllProducts } from '../../config/firebase';
 import { useSelector } from 'react-redux';
 import Card from '../../component/Cards';
 import './index.css';
-import Axios from 'axios';
 
 function Dashboard() {
   const [products, SetProducts] = useState([]);
