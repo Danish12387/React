@@ -23,26 +23,15 @@ router.get('/protectedRoute', verifyToken, (req, res) => {
 // })
 
 router.post('/adds', async (req, res) => {
-    const uri = 'mongodb+srv://danishshah:kinganonymous12@cluster0.w21gqbx.mongodb.net/';
-    const dbName = 'olx';
-    const collectionName = 'ads';
-
-    console.log(req.body);
-
-    const client = new MongoClient(uri);
-    try {
-        await client.connect();
-        const database = client.db(dbName);
-        const collection = database.collection(collectionName);
-
-        await collection.insertMany(req.body);
-
-        res.send({ message: 'Dummy products added successfully' });
-    } catch (e) {
-        res.status(500).send({ message: e.message });
-    } finally {
-        await client.close();
-    }
+        try {
+            // const ad = new Ads(req.body)
+            // await ad.save()
+            await Ads.insertMany(req.body);
+            res.send({ message: 'Ad posted successfully' })
+        }
+        catch (e) {
+            res.send({ message: e.message })
+        }
 });
 
 router.post('/register', async (req, res) => {

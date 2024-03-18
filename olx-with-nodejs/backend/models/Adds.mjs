@@ -1,41 +1,87 @@
+// import mongoose from "mongoose";
+// const { Schema } = mongoose;
+
+// const adsSchema = new Schema({
+//     title: {
+//         required: true,
+//         type: String
+//     },
+//     description: {
+//         required: true,
+//         type: String
+//     },
+//     price: {
+//         required: true,
+//         type: Number
+//     },
+//     id: {
+//         required: true,
+//         type: String
+//     },
+//     images: {
+//         required: true,
+//         type: []
+//     },
+//     thumbnail: {
+//         required: true,
+//         type: String
+//     },
+//     stock: {
+//         required: true,
+//         type: Number
+//     },
+//     locations: {
+//         required: true,
+//         type: []
+//     },
+// });
+
+// const Ads = mongoose.model('ads', adsSchema);
+
+// export default Ads;
+
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const adsSchema = new Schema({
+const itemSchema = new Schema({
+    uid: {
+        type: String,
+        required: true
+    },
     title: {
-        required: true,
-        type: String
-    },
-    description: {
-        required: true,
-        type: String
-    },
-    price: {
-        required: true,
-        type: Number
-    },
-    id: {
-        required: true,
-        type: String
-    },
-    images: {
-        required: true,
-        type: []
+        type: String,
+        required: true
     },
     thumbnail: {
-        required: true,
-        type: String
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
     },
     stock: {
-        required: true,
-        type: Number
+        type: Number,
+        required: true
     },
-    locations: {
-        required: true,
-        type: []
+    id: {
+        type: Number,
+        required: true
     },
+    price: {
+        type: Number,
+        required: true
+    },
+    images: {
+        type: [String],
+        required: true
+    },
+    rating: {
+        type: Number,
+        required: true
+    }
 });
 
-const Ads = mongoose.model('ads', adsSchema);
+const Ads = mongoose.model('ads', itemSchema);
 
 export default Ads;

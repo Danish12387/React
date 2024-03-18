@@ -19,10 +19,16 @@ function Dashboard() {
   }, [products])
 
   const ft = async () => {
-    const adds = await Axios.post('http://localhost:5000/adds', {
-      products
-    })
-    console.log('from firebase.js', adds);
+    try {
+      const adds = await Axios.post('http://localhost:5000/adds', {
+        products
+      })
+
+      console.log('from firebase.js', adds);
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
   async function fetchData() {
