@@ -48,7 +48,7 @@ const router = createBrowserRouter([
 function Layout() {
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
-    const tokenn = useSelector(state => state.tokenReducer.token);
+    const obj = useSelector(state => state.tokenReducer.token);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -57,14 +57,14 @@ function Layout() {
         // });
         fetchedData()
         setLoading(false);
-    }, [tokenn])
+    }, [obj.token])
 
     const fetchedData = async () => {
         try {
             const protecte = await Axios.get('http://localhost:5000/protectedRoute', {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${tokenn}`
+                    Authorization: `Bearer ${obj.token}`
                 }
             });
             setUser(protecte);

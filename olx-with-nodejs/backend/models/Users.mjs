@@ -47,8 +47,9 @@ userSchema.methods.comparePassword = function (password) {
 userSchema.methods.generateToken = function () {
     const { _id } = this;
     const token = jwt.sign({ _id }, jwtSecret);
+    const obj = {uid: _id, token: token}
 
-    return token;
+    return obj;
 }
 
 

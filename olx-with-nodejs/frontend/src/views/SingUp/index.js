@@ -9,7 +9,7 @@ function SingUp() {
     const [password, setPass] = useState();
     const [email, setEmail] = useState();
     const [fullName, setUserName] = useState();
-    const [showPass, setShowPass] = useState(false);
+    const [showPass, setShowPass] = useState(true);
 
     // const signup = async () => {
     //     try {
@@ -43,9 +43,9 @@ function SingUp() {
             <div className="signUp_main">
                 <input type="text" placeholder="User Name" required onChange={(e) => setUserName(e.target.value)} />
                 <input type="email" placeholder="Enter your Email" required onChange={(e) => setEmail(e.target.value)} />
-                <input placeholder="Password" required id="password-1" type={!showPass && 'password'} onChange={(e) => setPass(e.target.value)} />
+                <input placeholder="Password" required id="password-1" type={showPass ? 'password' : 'text'} onChange={(e) => setPass(e.target.value)} />
                 <input placeholder="Enter Password Again" type={showPass ? 'password' : 'text'} required id="password-2" />
-                <label id="checkbox" onClick={() => setShowPass(!showPass)} ><input type="checkbox" id="checkbox-1" /> Show Password</label>
+                <label id="checkbox" ><input type="checkbox" id="checkbox-1" onClick={() => setShowPass(!showPass)}/> Show Password</label>
                 <a href="/login" id="link">Already have an account?</a>
             </div>
             <button className="btn" onClick={signup}>Sign Up</button>

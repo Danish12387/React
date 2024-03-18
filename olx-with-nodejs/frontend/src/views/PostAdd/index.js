@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import { PostAdd, onAuthStateChangedHandler } from '../../config/firebase';
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import {
   MapContainer,
   TileLayer,
@@ -20,6 +21,7 @@ function Post() {
   const [stock, setStock] = useState();
   const [thumb, setThumbnail] = useState();
   const [location, setLocation] = useState()
+  const obj = useSelector(state => state.tokenReducer.token);
 
   const navigate = useNavigate();
 
@@ -72,8 +74,10 @@ function Post() {
     const data = { title, description, price, img, stock, thumb, location };
 
     try {
+
       await onAuthStateChangedHandler(async (isLoggedIn) => {
         if (isLoggedIn) {
+          
           await PostAdd(data);
           setTitle('')
           setDesc('')
@@ -82,11 +86,11 @@ function Post() {
           setStock('')
         } else {
           alert('User not authenticated');
-          navigate('/');
         }
-      });
+      }, obj);
+
     } catch (e) {
-      alert(e.message);
+      alert('from postAd-->',e.message);
     }
   }
 
@@ -123,10 +127,6 @@ function Post() {
           </label>
 
           <span>Images: </span>
-          
-          <label className="img_label">
-            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
-          </label>
 
           <label className="img_label">
             <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
@@ -139,7 +139,11 @@ function Post() {
           <label className="img_label">
             <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
           </label>
-          
+
+          <label className="img_label">
+            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
+          </label>
+
           <div className="map_cont">
             <h3>Set Location:</h3>
             {location && <MapContainer

@@ -5,7 +5,7 @@ import verifyToken from '../middlewares/verifyToken.mjs';
 const router = express.Router();
 
 router.get('/protectedRoute', verifyToken, (req, res) => {
-    res.status(200).send({ message: "Protected" });
+    res.status(200).send({ message: "Protected", uid: req.userId });
 });
 
 router.post('/register', async (req, res) => {
@@ -45,11 +45,11 @@ router.put('/login', async (req, res) => {
         }
 
         // Generate Token:
-        const token = user.generateToken();
-        user.tokens.push(token);
+        const obj = user.generateToken();
+        user.tokens.push(obj.token);
         await user.save();
 
-        res.send({ message: "User logged in successfully!", token: token });
+        res.send({ message: "User logged in successfully!", data: obj });
     }
     catch (e) {
         res.send({ message: e.message });

@@ -34,21 +34,21 @@ function Login() {
 
     const signin = async () => {
         try {
-            const loginn = await Axios.put("http://localhost:5000/login", {
+            const loginObj = await Axios.put("http://localhost:5000/login", {
                 email, password
             })
 
-            if (loginn.data.message == 'User Not Found!') {
+            if (loginObj.data.message == 'User Not Found!') {
                 alert('Invalid email address');
                 return;
             }
 
-            if (loginn.data.message == 'Invalid Password!') {
+            if (loginObj.data.message == 'Invalid Password!') {
                 alert('Invalid password');
                 return;
             }
-            
-            dispatch(updateToken(loginn.data.token));
+
+            dispatch(updateToken(loginObj.data.data));
 
             navigate('/');
 
@@ -64,8 +64,8 @@ function Login() {
                 <h1>Login</h1>
                 <div className="main-2">
                     <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter your Email" required />
-                    <input onChange={(e) => setPass(e.target.value)} placeholder="Password" type={showPass && 'password'} required />
-                    <label id="checkbox" onClick={() => setShowPass(!showPass)} ><input type="checkbox" id="checkbox-2" /> Show Password</label>
+                    <input onChange={(e) => setPass(e.target.value)} placeholder="Password" type={showPass ? 'password' : 'text'} required />
+                    <label id="checkbox" ><input type="checkbox" id="checkbox-2" onClick={() => setShowPass(!showPass)} /> Show Password</label>
                     <a href="" id="link" onClick={() => navigate('/signup')}>create an account?</a>
                 </div>
                 <button className="btn" onClick={signin}>Login</button>

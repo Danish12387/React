@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Axios from 'axios';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
@@ -76,7 +77,6 @@ export async function PostAdd(data) {
   }
   await addDoc(collection(db, "Posts"), { title, price, description, id, images, thumbnail, stock, locations: location });
 
-
   alert('Successfully Posted Add!');
 }
 
@@ -96,15 +96,29 @@ export async function Signin(userInfo) {
   alert('logged In Successfully!')
 }
 
-export const onAuthStateChangedHandler = (callback) => {
-  return onAuthStateChanged(auth, (user) => {
-    if (user) {
-      id = user.uid;
+export const onAuthStateChangedHandler = (callback, obj) => {
+  return fetchedData(callback, obj)
+};
+
+const fetchedData = async (callback, obj) => {
+  try {
+    const protecte = await Axios.get('http://localhost:5000/protectedRoute', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${obj.token}`
+      }
+    });
+
+    if (protecte.data.message == 'Protected') {
+      id = protecte.data.uid;
       callback(true, id);
+
     } else {
       id = null;
-      console.log(id);
       callback(false, null);
     }
-  });
-};
+  }
+  catch (e) {
+    console.log('from firebase try catch', e);
+  }
+}

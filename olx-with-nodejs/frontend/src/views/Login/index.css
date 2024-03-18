@@ -36,4 +36,10 @@
 
 input[type="checkbox"] {
     height: 14px;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: none;
 }
