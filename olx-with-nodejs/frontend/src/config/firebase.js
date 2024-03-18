@@ -22,14 +22,12 @@ const storage = getStorage(app)
 let id;
 
 export async function GetAllProducts() {
-  // const { id, description, thumbnail, price, rating, stock, images, title } = item;
-  // await addDoc(collection(db, "Posts"), { id, description, thumbnail, price, rating, stock, images, title });
-
   const querySnapshot = await getDocs(collection(db, "Posts"));
   const pro = [];
   querySnapshot.forEach((doc) => {
     pro.push({ uid: doc.id, ...doc.data() })
   })
+
   return pro;
 }
 
@@ -75,9 +73,26 @@ export async function PostAdd(data) {
   } catch (e) {
     alert(e.message)
   }
-  await addDoc(collection(db, "Posts"), { title, price, description, id, images, thumbnail, stock, locations: location });
 
-  alert('Successfully Posted Add!');
+  try {
+    const adds = await Axios.post('http://localhost:5000/adds', {
+      title: title,
+      description: description,
+      price: price,
+      id: id,
+      images: images,
+      thumbnail: thumbnail,
+      stock: stock,
+      locations: location
+    })
+
+    alert(adds.data.message);
+
+  }
+  catch (e) {
+    console.log(e);
+  }
+
 }
 
 export async function Createuser(userInfo) {

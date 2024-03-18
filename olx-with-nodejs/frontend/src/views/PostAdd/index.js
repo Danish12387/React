@@ -22,8 +22,15 @@ function Post() {
   const [thumb, setThumbnail] = useState();
   const [location, setLocation] = useState()
   const obj = useSelector(state => state.tokenReducer.token);
+  const fileInputRef = useRef(null);
 
   const navigate = useNavigate();
+
+  const resetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; 
+    }
+  };
 
   const markerIcon = new L.Icon({
     iconUrl: require("../../location-map-marker-icon-symbol-on-transparent-background-free-png.webp"),
@@ -69,7 +76,7 @@ function Post() {
   }
 
   const addPost = async () => {
-    if (!title || !description || !price || !img || !stock || !thumb) return alert('All fields must be filled!');
+    if (!title || !description || !price || !img.length || !stock || !thumb) return alert('All fields must be filled!');
 
     const data = { title, description, price, img, stock, thumb, location };
 
@@ -77,20 +84,21 @@ function Post() {
 
       await onAuthStateChangedHandler(async (isLoggedIn) => {
         if (isLoggedIn) {
-          
+
           await PostAdd(data);
           setTitle('')
           setDesc('')
           setPrice('')
           setImg('')
           setStock('')
+          resetFileInput();
         } else {
           alert('User not authenticated');
         }
       }, obj);
 
     } catch (e) {
-      alert('from postAd-->',e.message);
+      alert('from postAd-->', e.message);
     }
   }
 
@@ -123,7 +131,7 @@ function Post() {
 
           <span>Thumbnail: </span>
           <label className="img_label">
-            <input onChange={(e) => setThumbnail(() => e.target.files[0])} type="file" />
+            <input ref={fileInputRef} onChange={(e) => setThumbnail(() => e.target.files[0])} type="file" />
           </label>
 
           <span>Images: </span>

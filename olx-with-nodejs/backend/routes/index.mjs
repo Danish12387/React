@@ -1,11 +1,48 @@
 import express from "express";
 import Users from '../models/Users.mjs';
 import verifyToken from '../middlewares/verifyToken.mjs';
+import Ads from "../models/Adds.mjs";
+import { MongoClient } from 'mongodb';
 
 const router = express.Router();
 
 router.get('/protectedRoute', verifyToken, (req, res) => {
     res.status(200).send({ message: "Protected", uid: req.userId });
+});
+
+// router.post('/adds', async (req, res) => {
+//     try {
+//         // const ad = new Ads(req.body)
+//         // await ad.save()
+//         await Ads.insertMany(req.body);
+//         res.send({ message: 'Ad posted successfully' })
+//     }
+//     catch (e) {
+//         res.send({ message: e.message })
+//     }
+// })
+
+router.post('/adds', async (req, res) => {
+    const uri = 'mongodb+srv://danishshah:kinganonymous12@cluster0.w21gqbx.mongodb.net/';
+    const dbName = 'olx';
+    const collectionName = 'ads';
+
+    console.log(req.body);
+
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(collectionName);
+
+        await collection.insertMany(req.body);
+
+        res.send({ message: 'Dummy products added successfully' });
+    } catch (e) {
+        res.status(500).send({ message: e.message });
+    } finally {
+        await client.close();
+    }
 });
 
 router.post('/register', async (req, res) => {
