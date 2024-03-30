@@ -34,9 +34,9 @@ function Login() {
                 <h1>Login</h1>
                 <div className="main-2">
                     <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter your Email" required />
-                    <input onChange={(e) => setPass(e.target.value)} placeholder="Password" type={showPass && 'password'} required />
-                    <label id="checkbox" onClick={() => setShowPass(!showPass)} ><input type="checkbox" id="checkbox-2" /> Show Password</label>
-                    <a href="" id="link" onClick={() => navigate('signup')}>create an account?</a>
+                    <input onChange={(e) => setPass(e.target.value)} placeholder="Password" type={showPass ? 'password' : 'text'} required />
+                    <label id="checkbox" ><input onClick={() => setShowPass(!showPass)} type="checkbox" id="checkbox-2" /> Show Password</label>
+                    <a href="" id="link" onClick={() => navigate('/signup')}>create an account?</a>
                 </div>
                 <button className="btn" onClick={signin}>Login</button>
             </div>

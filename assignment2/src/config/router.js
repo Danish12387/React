@@ -64,7 +64,7 @@ function Layout() {
                 navigate('/');
             }
         }else {
-            if(path === '/' || path === '/details/' || path === '/postAdd') {
+            if(path === '/' || path === '/details/:Id' || path === '/postAdd') {
                 navigate('/login');
             }
         }
