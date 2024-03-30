@@ -1,5 +1,6 @@
 .Card_div {
-    height: auto;
+    height: 300px;
+    overflow: hidden;
     width: 290px;
     border: 1px solid grey;
     margin: 10px;
