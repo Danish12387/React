@@ -74,7 +74,7 @@ function App() {
         <form id="form" onSubmit={(e) => e.preventDefault()} >
           <input onChange={(e) => setLocation(e.target.value)} type="text" id="input" placeholder="Search" />
           <button id="btn" onClick={getWeather}>Search</button>
-          <button>History</button>
+          {/* <button>History</button> */}
         </form>
       </nav>
       <div id="weather-info">
@@ -88,12 +88,12 @@ function App() {
           </div>
           <div className="lower-box">
             <div className="boxes"><img src={humidity} /><span className='inner-text'>Humidity</span> {data?.current?.humidity}%</div>
-            <div className="boxes"><i className="fa-solid fa-cloud"></i><span className='inner-text'>Cloud</span> {data?.current?.cloud}%</div>
+            <div className="boxes"><img style={{width: '20px'}} src='https://www.freeiconspng.com/uploads/cloud-icon-22.png' /><span className='inner-text'>Cloud</span> {data?.current?.cloud}%</div>
             <div className="boxes"><img src={windSpeed} /><span className='inner-text'>Wind Speed</span> {data?.current?.wind_kph}kph</div>
-            <div className="boxes"><i className="fa-solid fa-eye"></i><span className='inner-text'>Visibility</span> {data?.current?.vis_km}km</div>
+            <div className="boxes"><img style={{width: '28px'}} src='https://static-00.iconduck.com/assets.00/visibility-icon-512x349-83wdi4gx.png' /><span className='inner-text'>Visibility</span> {data?.current?.vis_km}km</div>
           </div>
           <div className="lower-box">
-            <div className="boxes"><i className="fa-solid fa-temperature-three-quarters"></i><span className='inner-text'>Feels Like</span> <div>{data?.current?.feelslike_c}<sup>o</sup></div></div>
+            <div className="boxes"><img style={{width: '20px'}} src='https://static-00.iconduck.com/assets.00/temperature-feels-like-icon-495x512-ylzv705f.png' /><span className='inner-text'>Feels Like</span> <div>{data?.current?.feelslike_c}<sup>o</sup></div></div>
             <div className="boxes"><img src={windDirec} /><span className='inner-text'>Wind Directon</span> {data?.current?.wind_dir}</div>
             <div className="boxes"><span className='inner-text'>Country</span> {data?.location?.country}</div>
             <div className="boxes"><span className='inner-text'>Region</span> {data?.location?.region}</div>

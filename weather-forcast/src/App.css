@@ -128,4 +128,10 @@ nav button {
 
 #btn {
   margin-right: 10px;
+  transition: all .2s ease-out;
+}
+
+#btn:active {
+  background-color: rgb(214, 214, 214);
+  transform: scale(0.94);
 }
