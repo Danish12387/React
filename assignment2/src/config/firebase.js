@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
@@ -96,12 +96,20 @@ export async function Signin(userInfo) {
   alert('logged In Successfully!')
 }
 
+export async function signout() {
+  try {
+    await signOut(auth);
+  }
+  catch (e) {
+    console.log(e.message);
+  }
+}
 
 export const onAuthStateChangedHandler = (callback) => {
   return onAuthStateChanged(auth, (user) => {
     if (user) {
       id = user.uid;
-      callback(true, id);
+      callback(true, id, user);
     } else {
       id = null;
       console.log(id);

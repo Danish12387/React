@@ -23,7 +23,7 @@ function Dashboard() {
 
   if (loading) return <h2>Loading...</h2>
 
-  return <div className='dash_baap'  style={{backgroundColor: theme}}>
+  return <div className='dash_baap'>
     <div className="dashboard">
       {products.map((item) => {
         return <Card item={item} />

@@ -10,5 +10,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 1332px;
+    width: 1333px;
+    justify-content: center;
+    max-width: 1333px;
 }

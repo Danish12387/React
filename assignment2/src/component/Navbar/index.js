@@ -3,10 +3,13 @@ import { useState, useEffect } from 'react';
 import search from '../../search.png';
 import { useNavigate } from 'react-router-dom';
 import { updateTheme } from '../../store/themeSlice';
-import { useDispatch } from 'react-redux'; 
+import { useDispatch } from 'react-redux';
+import { signout } from '../../config/firebase';
+import { onAuthStateChangedHandler } from '../../config/firebase';
 
 function Navbar() {
     const [scrollPosition, setScrollPosition] = useState(0);
+    const [isTrue, setIsTrue] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -22,25 +25,42 @@ function Navbar() {
         };
     }, []);
 
-    const [color, setColor ] = useState();
+    useEffect(() => {
+        try {
+            onAuthStateChangedHandler(async (isLoggedIn, id, user) => {
+                if (isLoggedIn) {
+                    console.log(user);
+                } else {
+                    alert('User not authenticated');
+                    navigate('/');
+                }
+            });
+        } catch (e) {
+            alert(e.message);
+        }
+    }, [])
 
-    const randomColor = ()=>{
+    function SignOut() {
+        signout()
+    }
+
+    const [color, setColor] = useState();
+
+    const randomColor = () => {
         let random1 = Math.ceil(Math.random() * 256);
         let random2 = Math.ceil(Math.random() * 256);
         let random3 = Math.ceil(Math.random() * 256);
         setColor(`rgb(${random1}, ${random2}, ${random3})`);
     }
 
-    const clicked = ()=>{
+    const clicked = () => {
         randomColor()
         dispatch(updateTheme(color))
     }
 
     return <nav className={scrollPosition > 20 ? 'scroll-on' : ''}>
         <div className='nav_father_div'>
-            <div>
-
-            </div>
+            <div className='overlay' id={isTrue ? 'dsply_sh' : ''} onClick={() => setIsTrue(!isTrue)}></div>
             <div className='nav_top_div'>
                 <a href="/"><img className='logo' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQchAaWJ73dbvQzpd2ICNfedLHaEo7Pxd0fmOJoIxabUQ&s' /></a>
                 <div className='motors'>
@@ -64,7 +84,7 @@ function Navbar() {
                 <div className='nav_input_div'>
                     <img src='https://uxwing.com/wp-content/themes/uxwing/download/user-interface/search-icon.png' />
                     <input placeholder='Search city, area or locality' value="Pakistan" />
-                    <img style={{ cursor: 'pointer', marginRight: '15px', height: '15px', width: '15px' }} src='https://w7.pngwing.com/pngs/175/947/png-transparent-arrow-computer-icons-down-arrow-angle-black-desktop-wallpaper-thumbnail.png' />
+                    <img style={{ cursor: 'pointer', marginRight: '15px', height: '15px', width: '15px' }} src='https://static.thenounproject.com/png/551749-200.png' />
                 </div>
                 <div className='nav_input_div _2'>
                     <input placeholder='Find Cars, Mobile Phones and more...' />
@@ -73,16 +93,29 @@ function Navbar() {
                     </div>
                 </div>
                 <div className='nav_side_div'>
-                    <img onClick={()=> navigate('/cart')}  src="https://www.olx.com.pk/assets/iconChat_noinline.31f5df4a6a21fc770ed6863958662677.svg" alt="Go to chat" />
+                    <img onClick={() => navigate('/cart')} src="https://www.olx.com.pk/assets/iconChat_noinline.31f5df4a6a21fc770ed6863958662677.svg" alt="Go to chat" />
                     <img style={{ marginLeft: '7px' }} src="https://www.olx.com.pk/assets/iconNotifications_noinline.4444f6b42acbe30d772d80ef1225f574.svg" />
-                    <div className='nav_prof_img_div'>
+                    <div className='nav_prof_img_div' onClick={() => setIsTrue(!isTrue)}>
                         <img src='https://www.olx.com.pk/assets/iconProfilePicture.7975761176487dc62e25536d9a36a61d.png' />
-                        <img className='down_arrow' src='https://w7.pngwing.com/pngs/175/947/png-transparent-arrow-computer-icons-down-arrow-angle-black-desktop-wallpaper-thumbnail.png' />
+                        <img className='down_arrow' src='https://static.thenounproject.com/png/551749-200.png' id={isTrue ? 'set_arrow' : ''} />
+                    </div>
+                    <div className='acc_info' id={isTrue ? 'dsply_sh' : ''}>
+                        <div className='upper_div'>
+                            <img src='https://www.olx.com.pk/assets/iconProfilePicture.7975761176487dc62e25536d9a36a61d.png' />
+                            <div style={{ textAlign: 'left', marginLeft: '15px' }}>
+                                <p style={{ margin: 0, padding: 0 }}>Hello,</p>
+                                <h3 style={{ margin: 0, padding: 0, marginTop: '8px' }}>Danish Shah</h3>
+                            </div>
+                        </div>
+                        <div id='logout'>
+                            <img src='https://cdn.iconscout.com/icon/free/png-256/free-logout-2477642-2061904.png' />
+                            <button onClick={SignOut}>Logout</button>
+                        </div>
                     </div>
                 </div>
                 <div className='btn_div'>
                     <img src='https://www.olx.com.pk/assets/iconSellBorder_noinline.d9eebe038fbfae9f90fd61d971037e02.svg' />
-                    <button onClick={()=> navigate('/postAdd')} class="my-button" ><img src='https://www.olx.com.pk/assets/iconPlusSell_noinline.75fc7ea23e80b50447cf5757d8ef083a.svg' /> SELL</button>
+                    <button onClick={() => navigate('/postAdd')} class="my-button" ><img src='https://www.olx.com.pk/assets/iconPlusSell_noinline.75fc7ea23e80b50447cf5757d8ef083a.svg' /> SELL</button>
                 </div>
             </div>
         </div>

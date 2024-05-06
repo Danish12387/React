@@ -72,7 +72,7 @@ function Post() {
     const data = { title, description, price, img, stock, thumb, location };
 
     try {
-      await onAuthStateChangedHandler(async (isLoggedIn) => {
+      onAuthStateChangedHandler(async (isLoggedIn) => {
         if (isLoggedIn) {
           await PostAdd(data);
           setTitle('')
@@ -123,10 +123,6 @@ function Post() {
           </label>
 
           <span>Images: </span>
-          
-          <label className="img_label">
-            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
-          </label>
 
           <label className="img_label">
             <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
@@ -139,7 +135,11 @@ function Post() {
           <label className="img_label">
             <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
           </label>
-          
+
+          <label className="img_label">
+            <input onChange={(e) => setImg(() => [...img, e.target.files[0]])} type="file" />
+          </label>
+
           <div className="map_cont">
             <h3>Set Location:</h3>
             {location && <MapContainer

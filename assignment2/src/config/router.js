@@ -53,9 +53,7 @@ function Layout() {
             setUser(user);
             setLoading(false);
         });
-
     },[])
-
 
     useEffect(()=>{
         const path  = window.location.pathname;
