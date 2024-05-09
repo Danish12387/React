@@ -105,6 +105,18 @@ export async function signout() {
   }
 }
 
+export async function getSingleUser(Id) {
+  const docRef = doc(db, "users", Id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return { ...docSnap.data(), id: Id }
+  }
+  else {
+    return {}
+  }
+}
+
 export const onAuthStateChangedHandler = (callback) => {
   return onAuthStateChanged(auth, (user) => {
     if (user) {

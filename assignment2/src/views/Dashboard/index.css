@@ -10,7 +10,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 1333px;
+    width: 1363px;
     justify-content: center;
-    max-width: 1333px;
+    /* max-width: 1333px; */
+    margin-left: 15px;
 }

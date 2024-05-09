@@ -6,8 +6,10 @@ import { updateTheme } from '../../store/themeSlice';
 import { useDispatch } from 'react-redux';
 import { signout } from '../../config/firebase';
 import { onAuthStateChangedHandler } from '../../config/firebase';
+import { getSingleUser } from '../../config/firebase';
 
 function Navbar() {
+    const [userName, setUserName] = useState('Login');
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isTrue, setIsTrue] = useState(false);
     const navigate = useNavigate();
@@ -28,12 +30,9 @@ function Navbar() {
     useEffect(() => {
         try {
             onAuthStateChangedHandler(async (isLoggedIn, id, user) => {
-                if (isLoggedIn) {
-                    console.log(user);
-                } else {
-                    alert('User not authenticated');
-                    navigate('/');
-                }
+                    if(!isLoggedIn) return;
+                    const res = await getSingleUser(id)
+                    setUserName(res.userName);
             });
         } catch (e) {
             alert(e.message);
@@ -97,14 +96,14 @@ function Navbar() {
                     <img style={{ marginLeft: '7px' }} src="https://www.olx.com.pk/assets/iconNotifications_noinline.4444f6b42acbe30d772d80ef1225f574.svg" />
                     <div className='nav_prof_img_div' onClick={() => setIsTrue(!isTrue)}>
                         <img src='https://www.olx.com.pk/assets/iconProfilePicture.7975761176487dc62e25536d9a36a61d.png' />
-                        <img className='down_arrow' src='https://static.thenounproject.com/png/551749-200.png' id={isTrue ? 'set_arrow' : ''} />
+                        <img className='down_arrow' src='https://static.thenounproject.com/png/551749-200.png' id={isTrue ? 'set_arrow' : 'set_arrow_again'} />
                     </div>
                     <div className='acc_info' id={isTrue ? 'dsply_sh' : ''}>
                         <div className='upper_div'>
                             <img src='https://www.olx.com.pk/assets/iconProfilePicture.7975761176487dc62e25536d9a36a61d.png' />
                             <div style={{ textAlign: 'left', marginLeft: '15px' }}>
                                 <p style={{ margin: 0, padding: 0 }}>Hello,</p>
-                                <h3 style={{ margin: 0, padding: 0, marginTop: '8px' }}>Danish Shah</h3>
+                                <h3 style={{ margin: 0, padding: 0, marginTop: '8px' }}>{userName}</h3>
                             </div>
                         </div>
                         <div id='logout'>

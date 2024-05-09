@@ -11,14 +11,13 @@ export default function Cart() {
     useEffect(() => {
         setCart(cart);
     }, [cart])
-    console.log(carts);
     
     const removeCart = (id) => {
         dispatch(removeFromCart(id));
     }
 
-    if (!carts) {
-        return <h3>There are no items in this cart</h3>
+    if (!carts.length) {
+        return <h3>There are no items in this cart.</h3>
     }
 
     return (
