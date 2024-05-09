@@ -2,22 +2,43 @@
     font-family: sans-serif;
 }
 
+@keyframes rotate1 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotate2 {
+    from {
+        transform: rotate(180deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
 nav {
     background-color: white;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1100;
     transition: all .3s ease-out;
     border-bottom: 1px solid rgb(228, 228, 228);
     display: flex;
     align-items: center;
     justify-content: center;
     width: 98.9vw;
+    max-width: 98.9vw;
 }
 
-.nav_father_div {
-    /* width: 98vw; */
-}
+/* .nav_father_div {
+    width: 98vw;
+} */
 
 .logo {
     width: 44px;
@@ -132,6 +153,7 @@ nav {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    position: relative;
 }
 
 .nav_prof_img_div {
@@ -139,6 +161,8 @@ nav {
     align-items: center;
     justify-content: space-between;
     width: 53px;
+    position: relative;
+    z-index: 2100;
 }
 
 .nav_prof_img_div img {
@@ -147,8 +171,73 @@ nav {
 }
 
 .nav_prof_img_div .down_arrow {
-    width: 17px;
+    width: 16px;
     height: 17px;
+    transition: all .2 ease-out;
+}
+
+.nav_side_div .acc_info {
+    height: 145px;
+    width: 270px;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    box-shadow: 0px 2px 5px 1px rgb(165, 165, 165);
+    background-color: white;
+    display: none;
+    z-index: 2100;
+}
+
+.nav_side_div .acc_info .upper_div {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.nav_side_div .acc_info img {
+    width: 65px;
+    height: 65px;
+}
+
+.nav_side_div .acc_info #logout {
+    height: 50px;
+    width: 240px;
+    cursor: pointer;
+    display: flex;
+    transition: all .2s ease-out;
+    padding: 0 15px;
+    align-items: center;
+}
+
+.nav_side_div .acc_info #logout img {
+    height: 45px;
+    width: 45px;
+}
+
+.nav_side_div .acc_info button {
+    height: 100%;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.nav_side_div .acc_info #logout:hover {
+    background-color: rgb(211, 255, 255);
+}
+
+#dsply_sh {
+    display: block;
+}
+
+#set_arrow {
+    animation: rotate1 .2s ease-out forwards;
+}
+
+#set_arrow_again {
+    animation: rotate2 .2s ease-out backwards;
 }
 
 .btn_div {
@@ -171,4 +260,16 @@ nav {
     justify-content: space-between;
     width: 67px;
     cursor: pointer;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
+    display: none;
+    z-index: 2000;
 }

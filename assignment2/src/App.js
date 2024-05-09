@@ -16,7 +16,6 @@ function App() {
               <Router />
             </div>
           </div>
-
         </div>
      
     </Provider>

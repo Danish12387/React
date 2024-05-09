@@ -2,13 +2,46 @@
     width: 98.9vw;
     margin-top: 40px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: #002f34;
 }
 
 .dashboard {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 1332px;
+    width: 1333px;
+    justify-content: center;
+    max-width: 1333px;
+    margin-left: 15px;
+}
+.dash_upper_div {
+    margin-left: 15px;
+}
+
+.dash_upper_div h1 {
+    text-align: start;
+    font-size: 26px;
+    color: #002f34;
+}
+
+.dash_upper_div .images_div {
+    display: flex;
+    flex-wrap: wrap;
+    height: 390px;
+    width: 1263px;
+}
+
+.dash_upper_div .images_div div {
+    width: 100px;
+    margin: 20px;
+    height: auto;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dash_upper_div .images_div img {
+    width: 90px;
 }
