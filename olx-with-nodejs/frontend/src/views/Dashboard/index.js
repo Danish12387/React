@@ -40,7 +40,7 @@ function Dashboard() {
 
   const theme = useSelector(state => state.themeReducer.theme);
 
-  // if (loading) return <h2>Loading...</h2>
+  if (loading) return <h2>Loading...</h2>
 
   return <div className='dash_baap' style={{ backgroundColor: theme }}>
     {/* <button onClick={fetchData}>click me</button> */}
