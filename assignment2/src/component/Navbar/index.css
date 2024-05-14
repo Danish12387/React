@@ -32,8 +32,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 98.9vw;
-    max-width: 98.9vw;
+    width: 100vw;
 }
 
 /* .nav_father_div {
