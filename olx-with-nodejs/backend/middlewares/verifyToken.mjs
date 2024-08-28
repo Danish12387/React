@@ -14,7 +14,7 @@ async function verifyToken(req, res, next) {
         const tokenExists = await Users.findOne({ tokens: token });
 
         if (!tokenExists) {
-            res.status(401).send({ message: 'Invalid Token!' });
+            res.status(401).send({ message: 'Invalid Token!1' });
             return;
         }
 

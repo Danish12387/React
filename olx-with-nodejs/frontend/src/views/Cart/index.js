@@ -17,7 +17,7 @@ export default function Cart() {
         dispatch(removeFromCart(id));
     }
 
-    if (!carts) {
+    if (!carts.length) {
         return <h3>There are no items in this cart</h3>
     }
 

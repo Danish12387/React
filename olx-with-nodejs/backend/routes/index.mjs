@@ -22,31 +22,50 @@ router.get('/protectedRoute', verifyToken, (req, res) => {
 //     }
 // })
 
-router.post('/adds', async (req, res) => {
-        try {
-            // const ad = new Ads(req.body)
-            // await ad.save()
-            await Ads.insertMany(req.body);
-            res.send({ message: 'Ad posted successfully' })
-        }
-        catch (e) {
-            res.send({ message: e.message })
-        }
+router.get('/ads', async (req, res) => {
+    try {
+        const ads = await Ads.find();
+        res.send(ads);
+    } catch (e) {
+        res.status(500).send({ message: e.message });
+    }
 });
+
+
+router.post('/adds', async (req, res) => {
+    try {
+        const { products } = req.body;
+
+        if (!Array.isArray(products)) {
+            return res.status(400).send({ message: 'Invalid data format. Expected an array of products.' });
+        }
+
+        const ads = await Ads.insertMany(products);
+
+        console.log('Ads posted:', ads);
+
+        res.send({ message: 'Ads posted successfully', ads });
+    } catch (e) {
+        res.status(500).send({ message: e.message });
+    }
+});
+
 
 router.post('/register', async (req, res) => {
     try {
         const { email } = req.body;
-        const user = new Users(req.body);
         const IsExists = await Users.findOne({ email });
 
         if (IsExists) {
             res.send({ message: 'Email already exists!' })
             return;
         }
-        await user.save()
+        const user = new Users(req.body);
+        const obj = user.generateToken();
+        user.tokens.push(obj.token);
+        await user.save();
 
-        res.send({ message: 'User registered successfully!' })
+        res.send({ message: 'User registered successfully!', data: obj });
     }
     catch (e) {
         res.send({ message: e.message })

@@ -2,6 +2,8 @@ import './index.css';
 import { useNavigate } from "react-router-dom";
 import { Createuser } from '../../config/firebase.js';
 import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { updateToken } from '../../store/tokenSlice.mjs';
 import Axios from 'axios';
 
 function SingUp() {
@@ -10,6 +12,7 @@ function SingUp() {
     const [email, setEmail] = useState();
     const [fullName, setUserName] = useState();
     const [showPass, setShowPass] = useState(true);
+    const dispatch = useDispatch();
 
     // const signup = async () => {
     //     try {
@@ -31,7 +34,8 @@ function SingUp() {
                 return;
             }
 
-            navigate('/dashboard')
+            dispatch(updateToken(signupp.data.data));
+            navigate('/');
         } catch (e) {
             alert(e.message)
         }
@@ -45,7 +49,7 @@ function SingUp() {
                 <input type="email" placeholder="Enter your Email" required onChange={(e) => setEmail(e.target.value)} />
                 <input placeholder="Password" required id="password-1" type={showPass ? 'password' : 'text'} onChange={(e) => setPass(e.target.value)} />
                 <input placeholder="Enter Password Again" type={showPass ? 'password' : 'text'} required id="password-2" />
-                <label id="checkbox" ><input type="checkbox" id="checkbox-1" onClick={() => setShowPass(!showPass)}/> Show Password</label>
+                <label id="checkbox" ><input type="checkbox" id="checkbox-1" onClick={() => setShowPass(!showPass)} /> Show Password</label>
                 <a href="/login" id="link">Already have an account?</a>
             </div>
             <button className="btn" onClick={signup}>Sign Up</button>
