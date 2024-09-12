@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetSinglePro } from '../../config/firebase';
 import { useDispatch } from "react-redux";
-import { updateCart } from '../../store/cartSlice';
+import { updateCart } from '../../store/CartSlice';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { removeFromCart } from '../../store/cartSlice';
+import { removeFromCart } from '../../store/CartSlice';
 import './index.css';
 
 export default function Cart() {
@@ -11,7 +11,7 @@ export default function Cart() {
     useEffect(() => {
         setCart(cart);
     }, [cart])
-    
+
     const removeCart = (id) => {
         dispatch(removeFromCart(id));
     }
