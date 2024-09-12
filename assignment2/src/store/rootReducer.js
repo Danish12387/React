@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import cartSlice from './CartSlice'
+import cartSlice from './cartSlice'
 import themeSlice from './themeSlice';
 
 const rootReducer = combineReducers({
