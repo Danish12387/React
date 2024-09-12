@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import { GetSinglePro } from '../../config/firebase';
 import { useDispatch } from "react-redux";
 import { updateCart } from '../../store/cartSlice';
-import SimpleImageSlider from "react-simple-image-slider"
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
 import React from 'react';
 import './index.css';
 import {
@@ -35,7 +37,6 @@ function Details() {
 
         const res = await GetSinglePro(Id);
         setSingleProd(res);
-        console.log(res);
         setLocation(res.locations);
     }
 
@@ -51,17 +52,27 @@ function Details() {
 
     return <div className="details">
 
-        <div style={{maxWidth: '1274px', minWidth: '1104px', marginLeft: '32px'}}>
+        <div style={{ maxWidth: '1274px', minWidth: '1104px', marginLeft: '32px' }}>
             <div className="details_main_div">
-                <div style={{ height: '580px', width: '750px'}}>
-                    <SimpleImageSlider
-                        width={750}
-                        height={580}
-                        images={images}
-                        showBullets={true}
-                        showNavs={true}
-                        navStyle={2}
-                    />
+                <div style={{ height: '580px', width: '750px' }}>
+                    <Swiper
+                        spaceBetween={30}
+                        slidesPerView={1}
+                        navigation={true} // Enables navigation buttons
+                        pagination={{ clickable: true }} // Enables bullets (pagination)
+                        modules={[Navigation, Pagination]} // Use the imported modules
+                        style={{ width: '750px', height: '580px' }}
+                    >
+                        {images.map((image, index) => (
+                            <SwiperSlide key={index}>
+                                <img
+                                    src={image} // Ensure correct image field
+                                    alt={`Slide ${index + 1}`}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
                 <div className='details_side'>
                     <div className="profile_div">
@@ -109,11 +120,11 @@ function Details() {
             <div className='details_bottom'>
                 <div>
                     <h1>Price: ${price}</h1>
-                    <h3 style={{marginTop: "20px"}}>{title}</h3>
+                    <h3 style={{ marginTop: "20px" }}>{title}</h3>
                     <span><img src="https://www.iconpacks.net/icons/2/free-location-icon-2952-thumb.png" /> Islamabad Highway, Islamabad</span>
                 </div>
                 <div>
-                    <h2 style={{marginBottom: "10px"}}>Description</h2>
+                    <h2 style={{ marginBottom: "10px" }}>Description</h2>
                     <p>{description}</p>
                 </div>
                 <button onClick={addToCart} className="cart_btn">Add to Cart</button>
