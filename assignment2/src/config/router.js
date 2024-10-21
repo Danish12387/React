@@ -72,7 +72,7 @@ function Layout() {
     if (loading) return <Loading />
 
     return <div>
-        <Header />
+        {user && <Header />}
         <Outlet />
     </div>
 }
