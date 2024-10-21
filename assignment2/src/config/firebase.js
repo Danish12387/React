@@ -92,7 +92,7 @@ export async function Signin(userInfo) {
   const { email, password } = userInfo
   await signInWithEmailAndPassword(auth, email, password)
 
-  toast.success('logged In Successfully!')
+  toast.success('Logged In Successfully!')
 }
 
 export async function signout() {
