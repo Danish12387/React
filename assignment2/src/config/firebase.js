@@ -77,8 +77,6 @@ export async function PostAdd(data) {
   }
   await addDoc(collection(db, "Posts"), { title, price, description, id, images, thumbnail, stock, locations: location });
 
-
-  toast.success('Successfully Posted Add!');
 }
 
 export async function Createuser(userInfo) {

@@ -71,15 +71,14 @@ function Post() {
 
   const addPost = async () => {
     setLoading(true);
-
-    if (!title || !description || !price || !img || !stock || !thumb) {
-      throw new Error("All fields must be filled");
-    }
-
-    const data = { title, description, price, img, stock, thumb, location };
-
     try {
-      onAuthStateChangedHandler(async (isLoggedIn) => {
+      if (!title || !description || !price || !img || !stock || !thumb) {
+        throw new Error("All fields must be filled");
+      }
+
+      const data = { title, description, price, img, stock, thumb, location };
+
+      await onAuthStateChangedHandler(async (isLoggedIn) => {
         if (isLoggedIn) {
           await PostAdd(data);
           setTitle('')
@@ -87,16 +86,20 @@ function Post() {
           setPrice('')
           setImg('')
           setStock('')
+
+          toast.success('Post added successfully!');
+          navigate('/');
         } else {
           toast.error('User not authenticated');
           navigate('/');
         }
+        setLoading(false);
       });
     } catch (e) {
       toast.error(e.message);
-    } finally {
       setLoading(false);
     }
+
   }
 
   return (

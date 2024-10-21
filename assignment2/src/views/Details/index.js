@@ -41,7 +41,7 @@ function Details() {
         setSingleProd(res);
         setLocation(res.locations);
     }
-    console.log(location)
+
     if (!singleProd) {
         return <Loading />
     }
@@ -94,7 +94,7 @@ function Details() {
                     </div>
                     <div className="location_div">
                         <h2>Location</h2>
-                        <span><img src="https://www.iconpacks.net/icons/2/free-location-icon-2952-thumb.png" /> Islamabad Highway, Islamabad</span>
+                        <span><img src="https://www.iconpacks.net/icons/2/free-location-icon-2952-thumb.png" />{singleProd?.location || "Islamabad Highway, Islamabad"} </span>
                         {location && <div className="map_cont_details">
                             <MapContainer
                                 center={location}
@@ -124,7 +124,7 @@ function Details() {
                 <div>
                     <h1>Price: ${price}</h1>
                     <h3 style={{ marginTop: "20px" }}>{title}</h3>
-                    <span><img src="https://www.iconpacks.net/icons/2/free-location-icon-2952-thumb.png" /> Islamabad Highway, Islamabad</span>
+                    <span><img src="https://www.iconpacks.net/icons/2/free-location-icon-2952-thumb.png" /> {singleProd?.location || "Islamabad Highway, Islamabad"} </span>
                 </div>
                 <div>
                     <h2 style={{ marginBottom: "10px" }}>Description</h2>
