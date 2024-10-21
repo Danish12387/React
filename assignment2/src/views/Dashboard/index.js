@@ -3,6 +3,7 @@ import { GetAllProducts } from '../../config/firebase';
 import { useSelector } from 'react-redux';
 import Card from '../../component/Cards';
 import './index.css';
+import Loading from "../../component/Loading/Loading";
 
 function Dashboard() {
   const [products, SetProducts] = useState([]);
@@ -21,7 +22,7 @@ function Dashboard() {
 
   const theme = useSelector(state => state.themeReducer.theme);
 
-  if (loading) return <h2>Loading...</h2>
+  if (loading) return <Loading />
 
   return <div className='dash_baap'>
     <div className="dash_upper_div">

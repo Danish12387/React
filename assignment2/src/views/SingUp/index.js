@@ -2,6 +2,7 @@ import './index.css';
 import { useNavigate } from "react-router-dom";
 import { Createuser } from '../../config/firebase.js';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 function SingUp() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function SingUp() {
             await Createuser({ email, password, userName })
             navigate('/')
         } catch (e) {
-            alert(e.message)
+            toast.error(e.message)
         }
     }
 

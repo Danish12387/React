@@ -1,5 +1,5 @@
 .add {
-    border:  1px solid rgb(172, 172, 172);
+    border: 1px solid rgb(172, 172, 172);
     padding: 30px;
     border-radius: 5px;
 }
@@ -14,7 +14,7 @@
     background-color: white;
 }
 
-.post_main h3{
+.post_main h3 {
     text-align: left;
 }
 
@@ -31,29 +31,29 @@
     height: 50px;
 }
 
-.post_main label span{
+.post_main label span {
     font-size: 15px;
     text-align: left;
     width: 100%;
-} 
+}
 
-.post_main label .text_input{
+.post_main label .text_input {
     height: 50px;
     width: 99%;
     margin-top: 10px;
-    border: 1px solid grey; 
+    border: 1px solid grey;
     border-radius: 5px;
     font-size: 16px;
     padding: 0 10px;
-} 
+}
 
-.post_main label input[type=file]{
+.post_main label input[type=file] {
     width: 100%;
     margin-top: 10px;
     cursor: pointer;
 }
 
-.post_main button{
+.post_main button {
     background-color: #002f34;
     height: 46px;
     width: 130px;
@@ -99,4 +99,17 @@
     margin-top: 10px;
     height: 500px;
     width: 100%;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+    height: 1rem;
+    width: 1rem;
 }

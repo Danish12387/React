@@ -16,12 +16,14 @@ import {
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import Loading from "../../component/Loading/Loading";
+import toast from "react-hot-toast";
 
 function Details() {
     const [singleProd, setSingleProd] = useState();
+    const [location, setLocation] = useState();
     const { Id } = useParams();
     const dispatch = useDispatch();
-    const [location, setLocation] = useState()
 
     const markerIcon = new L.Icon({
         iconUrl: require("../../location-map-marker-icon-symbol-on-transparent-background-free-png.webp"),
@@ -39,13 +41,14 @@ function Details() {
         setSingleProd(res);
         setLocation(res.locations);
     }
-
+    console.log(location)
     if (!singleProd) {
-        return <h2>loading...</h2>
+        return <Loading />
     }
 
     const addToCart = () => {
-        dispatch(updateCart(singleProd))
+        dispatch(updateCart(singleProd));
+        toast.success("Added to cart");
     }
 
     const { price, description, images, title } = singleProd;
@@ -58,9 +61,9 @@ function Details() {
                     <Swiper
                         spaceBetween={30}
                         slidesPerView={1}
-                        navigation={true} // Enables navigation buttons
-                        pagination={{ clickable: true }} // Enables bullets (pagination)
-                        modules={[Navigation, Pagination]} // Use the imported modules
+                        navigation={true}
+                        pagination={{ clickable: true }}
+                        modules={[Navigation, Pagination]}
                         style={{ width: '750px', height: '580px' }}
                     >
                         {images.map((image, index) => (

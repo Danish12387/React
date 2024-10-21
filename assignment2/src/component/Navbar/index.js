@@ -4,16 +4,18 @@ import search from '../../search.png';
 import { useNavigate } from 'react-router-dom';
 import { updateTheme } from '../../store/themeSlice';
 import { useDispatch } from 'react-redux';
-import { signout } from '../../config/firebase';
+import { PostAdd, signout } from '../../config/firebase';
 import { onAuthStateChangedHandler } from '../../config/firebase';
 import { getSingleUser } from '../../config/firebase';
+import { ShoppingCart } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 function Navbar() {
     const [userName, setUserName] = useState('Login');
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isTrue, setIsTrue] = useState(false);
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -30,12 +32,12 @@ function Navbar() {
     useEffect(() => {
         try {
             onAuthStateChangedHandler(async (isLoggedIn, id, user) => {
-                    if(!isLoggedIn) return;
-                    const res = await getSingleUser(id)
-                    setUserName(res.userName);
+                if (!isLoggedIn) return;
+                const res = await getSingleUser(id)
+                setUserName(res.userName);
             });
         } catch (e) {
-            alert(e.message);
+            toast.error(e.message);
         }
     }, [])
 
@@ -64,7 +66,7 @@ function Navbar() {
                 <a href="/"><img className='logo' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQchAaWJ73dbvQzpd2ICNfedLHaEo7Pxd0fmOJoIxabUQ&s' /></a>
                 <div className='motors'>
                     <div className='img_div'>
-                        <img src='https://p1.hiclipart.com/preview/112/763/614/performance-icon-car-sports-car-car-dealership-silhouette-silhouette-racing-car-motor-vehicle-service-icon-design-png-clipart.jpg' alt='not loading' />
+                        <img src='/motor.jpeg' alt='not loading' />
                     </div>
                     <span style={{ 'fontSize': 11, 'fontWeight': 'bold' }}>MOTORS</span>
                 </div>
@@ -92,7 +94,7 @@ function Navbar() {
                     </div>
                 </div>
                 <div className='nav_side_div'>
-                    <img onClick={() => navigate('/cart')} src="https://www.olx.com.pk/assets/iconChat_noinline.31f5df4a6a21fc770ed6863958662677.svg" alt="Go to chat" />
+                    <ShoppingCart onClick={() => navigate('/cart')} />
                     <img style={{ marginLeft: '7px' }} src="https://www.olx.com.pk/assets/iconNotifications_noinline.4444f6b42acbe30d772d80ef1225f574.svg" />
                     <div className='nav_prof_img_div' onClick={() => setIsTrue(!isTrue)}>
                         <img src='https://www.olx.com.pk/assets/iconProfilePicture.7975761176487dc62e25536d9a36a61d.png' />

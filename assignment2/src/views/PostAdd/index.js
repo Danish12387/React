@@ -11,6 +11,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import PostAddDiv from '../../component/PostAddDiv'
 import "./index.css"
+import { Loader2 } from "lucide-react";
+import toast from 'react-hot-toast';
 
 function Post() {
   const [title, setTitle] = useState();
@@ -19,7 +21,8 @@ function Post() {
   const [img, setImg] = useState([]);
   const [stock, setStock] = useState();
   const [thumb, setThumbnail] = useState();
-  const [location, setLocation] = useState()
+  const [location, setLocation] = useState();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -67,7 +70,11 @@ function Post() {
   }
 
   const addPost = async () => {
-    if (!title || !description || !price || !img || !stock || !thumb) return alert('All fields must be filled!');
+    setLoading(true);
+
+    if (!title || !description || !price || !img || !stock || !thumb) {
+      throw new Error("All fields must be filled");
+    }
 
     const data = { title, description, price, img, stock, thumb, location };
 
@@ -81,12 +88,14 @@ function Post() {
           setImg('')
           setStock('')
         } else {
-          alert('User not authenticated');
+          toast.error('User not authenticated');
           navigate('/');
         }
       });
     } catch (e) {
-      alert(e.message);
+      toast.error(e.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -156,7 +165,18 @@ function Post() {
             </MapContainer>}
           </div>
 
-          <button onClick={addPost}>Post Now</button>
+
+          {
+            loading ?
+              <button>
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                Please wait
+              </button>
+              :
+              <button onClick={addPost}>
+                Post Now
+              </button>
+          }
         </div>
 
         {/*

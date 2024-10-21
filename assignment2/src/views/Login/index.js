@@ -2,6 +2,7 @@ import './index.css'
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Signin } from '../../config/firebase.js';
+import toast from 'react-hot-toast';
 
 function Login() {
     const navigate = useNavigate();
@@ -19,11 +20,11 @@ function Login() {
             console.error(error);
 
             if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
-                alert('Invalid email address');
+                toast.error('Invalid email address');
             } else if (error.code === 'auth/wrong-password') {
-                alert('Invalid password');
+                toast.error('Invalid password');
             } else {
-                alert('An error occurred during login. Please try again.');
+                toast.error('An error occurred during login. Please try again.');
             }
         }
     };

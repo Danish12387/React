@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import toast from "react-hot-toast";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2bIySEJktd_uLEyC5HLrPTslF5eYyriM",
@@ -57,10 +58,10 @@ export async function PostAdd(data) {
   try {
     await Promise.all(
       img.map(async (item) => {
-        const profilePhotoRef = ref(storage, `posts/${id}/images/${item.name}`)
-        await uploadBytes(profilePhotoRef, item);
+        const photoRef = ref(storage, `posts/${id}/images/${item.name}`);
+        await uploadBytes(photoRef, item);
 
-        const downloadUrl = await getDownloadURL(profilePhotoRef);
+        const downloadUrl = await getDownloadURL(photoRef);
         images.push(downloadUrl);
 
       })
@@ -72,12 +73,12 @@ export async function PostAdd(data) {
     thumbnail = downloadUrl2;
 
   } catch (e) {
-    alert(e.message)
+    toast.error(e.message)
   }
   await addDoc(collection(db, "Posts"), { title, price, description, id, images, thumbnail, stock, locations: location });
 
 
-  alert('Successfully Posted Add!');
+  toast.success('Successfully Posted Add!');
 }
 
 export async function Createuser(userInfo) {
@@ -86,14 +87,14 @@ export async function Createuser(userInfo) {
   const userRef = doc(db, 'users', uid);
   await setDoc(userRef, { email, userName, password })
 
-  alert('Registered Successfully!')
+  toast.success('Registered Successfully!')
 }
 
 export async function Signin(userInfo) {
   const { email, password } = userInfo
   await signInWithEmailAndPassword(auth, email, password)
 
-  alert('logged In Successfully!')
+  toast.success('logged In Successfully!')
 }
 
 export async function signout() {

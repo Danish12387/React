@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { removeFromCart } from '../../store/CartSlice';
 import './index.css';
+import { Trash2 } from 'lucide-react';
 
 export default function Cart() {
     const [carts, setCart] = useState([]);
@@ -17,7 +18,7 @@ export default function Cart() {
     }
 
     if (!carts.length) {
-        return <h3>There are no items in this cart.</h3>
+        return <h3 style={{ paddingTop: '30px' }}>There are no items in this cart.</h3>
     }
 
     return (
@@ -35,7 +36,7 @@ export default function Cart() {
                         <span>Price: ${price}</span>
                     </div>
                     <div className='cart_img'>
-                        <img onClick={() => removeCart(id)} src='https://static-00.iconduck.com/assets.00/delete-icon-2048x1991-ncxytfv2.png' />
+                        <Trash2 onClick={() => removeCart(id)} style={{ cursor: 'pointer' }} />
                     </div>
                 </div>
             })}

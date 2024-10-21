@@ -9,6 +9,7 @@ import Login from "../views/Login";
 import PostAdd from "../views/PostAdd";
 import Header from '../component/Navbar';
 import Cart from "../views/Cart";
+import Loading from "../component/Loading/Loading";
 
 const router = createBrowserRouter([
     {
@@ -48,31 +49,31 @@ function Layout() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        onAuthStateChanged(auth, (user)=>{
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
             setUser(user);
             setLoading(false);
         });
-    },[])
+    }, [])
 
-    useEffect(()=>{
-        const path  = window.location.pathname;
-        if(user){
-            if(path === '/signup' || path === '/login'){
+    useEffect(() => {
+        const path = window.location.pathname;
+        if (user) {
+            if (path === '/signup' || path === '/login') {
                 navigate('/');
             }
-        }else {
-            if(path === '/' || path === '/details/:Id' || path === '/postAdd') {
+        } else {
+            if (path === '/' || path === '/details/:Id' || path === '/postAdd') {
                 navigate('/login');
             }
         }
-    },[window.location.pathname, user])
+    }, [window.location.pathname, user])
 
-    if(loading) return <h2>Loading...</h2>
+    if (loading) return <Loading />
 
     return <div>
-        <Header/>
-        <Outlet/>
+        <Header />
+        <Outlet />
     </div>
 }
 
